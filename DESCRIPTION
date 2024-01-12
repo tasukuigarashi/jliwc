@@ -1,0 +1,26 @@
+Package: jliwc
+Title: What the Package Does (One Line, Title Case)
+Version: 0.1.0
+Authors@R: 
+    person("Tasuku", "Igarashi", , "igarashi.tasuku.n6@f.mail.nagoya-u.ac.jp", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9432-4425"))
+Description: What the package does (one paragraph).
+Depends:
+    R (>= 4.2.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+    rlang,
+    dplyr,
+    tidyr,
+    stringr,
+    stringi,
+    withr,
+    quanteda,
+    gibasa (>= 1.0.1)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+
