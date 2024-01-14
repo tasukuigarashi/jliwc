@@ -49,7 +49,7 @@ setup_ipadic <- function(
       ipadic_tar <- file.path(tempdir(), paste0(tar_dic, ".tar.gz"))
       download.file(ipadic_url, destfile = ipadic_tar, mode = "wb")
 
-      system(paste0("tar.exe -xf ", ipadic_tar, " -C ", tempdir()))
+      system(paste0("tar -xf ", ipadic_tar, " -C ", tempdir()))
 
       # Compile IPADIC
       gibasa::build_sys_dic(

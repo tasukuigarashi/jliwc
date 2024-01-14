@@ -1,10 +1,11 @@
 Package: jliwc
-Title: What the Package Does (One Line, Title Case)
+Title: Japanese text analysis using J-LIWC dictionary
 Version: 0.1.0
 Authors@R: 
-    person("Tasuku", "Igarashi", , "igarashi.tasuku.n6@f.mail.nagoya-u.ac.jp", role = c("aut", "cre"),
+    person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9432-4425"))
-Description: What the package does (one paragraph).
+Description: This package provides functions to analyze Japanese text using J-LIWC, the Japanese version of LIWC (Linguistic Inquiry and Word Count).
+    The J-LIWC2015 dictionary is developed by Igarashi et al. (2022) <https://doi.org/10.3389/fpsyg.2022.841534>. The dictionary file is available at <https://www.liwc.app/> for licensed users (non-commercial use only).
 Depends:
     R (>= 4.2.0)
 License: MIT + file LICENSE
