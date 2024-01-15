@@ -2,42 +2,29 @@
 % Please edit documentation in R/read_dict.R
 \name{read_dict}
 \alias{read_dict}
-\title{Read the dictionary and get English categories}
+\title{Read the LIWC dictionary}
 \usage{
-read_dict(
-  file = getOption("jliwc_dic_home"),
-  format = "LIWC2015",
-  initialize = FALSE,
-  dic_dir = getOption("jliwc_dic_home"),
-  mecab_dir = getOption("jliwc_project_home")
-)
+read_dict(file, format = c("LIWC2015", "LIWC22"))
 }
 \arguments{
 \item{file}{A file path of the dictionary}
 
 \item{format}{A format of the dictionary (LIWC2015 or LIWC22)}
-
-\item{initialize}{A logical value. If TRUE, initialize MeCab dictionaries and J-LIWC2015 dictionary.}
-
-\item{dic_dir}{A directory path of the J-LIWC2015 dictionary}
-
-\item{mecab_dir}{A directory path of the MeCab dictionaries}
 }
 \value{
 A dictionary object
 }
 \description{
-Read the dictionary and get English categories
+Read the LIWC dictionary
 }
 \examples{
+
 # Set up dictionaries
 setup_ipadic()
 setup_userdic()
 setup_jliwcdic() # choose a dictionary file from a local directory
 
 # Read the dictionary (LIWC2015 format)
-dictliwc <- read_dict()
-# Read the dictionary (LIWC22 format)
-dictliwc22 <- read_dict(format = "LIWC22")
+dictliwc <- read_dict(file.path(getOption("jliwc_project_home"), "Japanese_Dictionary.dic"))
 
 }

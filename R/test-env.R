@@ -1,5 +1,5 @@
 other_function <- function(...) {
-  if(exists("package:jliwc", where = .GlobalEnv)) {
+  if (exists("package:jliwc", where = .GlobalEnv)) {
     env <- get("jliwc_env", as.environment("package:jliwc"))
   } else {
     env <- get("jliwc_env", .GlobalEnv)
@@ -9,4 +9,3 @@ other_function <- function(...) {
   result <- env$MECAB_LOOKUP
   return(result)
 }
-

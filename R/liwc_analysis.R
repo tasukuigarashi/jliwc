@@ -33,14 +33,6 @@
 #' liwc_results
 #'
 liwc_analysis <- function(input, text_field = "text", dict = getOption("jliwc_dictfile"), lang = c("en", "ja"), pos_tag = TRUE, sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC")) {
-  # Import the package environment
-  if(exists("package:jliwc", where = .GlobalEnv)) {
-    env <- get("jliwc_env", envir = as.environment("package:jliwc"))
-  } else {
-    message("Debug mode: jliwc_env is assigned to the global environment.")
-    env <- get("jliwc_env", envir = .GlobalEnv)
-  }
-
   # Default category labels are in English
   lang <- match.arg(lang)
 
@@ -54,14 +46,15 @@ liwc_analysis <- function(input, text_field = "text", dict = getOption("jliwc_di
     }
   } else if (inherits(input, "character")) {
     doc_id <- if (is.null(names(input))) {
-      as.character(seq_len(length(input))) } else {
-        as.character(names(input)) }
+      as.character(seq_len(length(input)))
+    } else {
+      as.character(names(input))
+    }
 
     input <- data.frame(text = input)
     text_field <- "text"
 
     input[[docid_field]] <- doc_id
-
   } else {
     stop("Input must be a data frame or a list of character vector.")
   }
@@ -107,7 +100,8 @@ liwc_analysis <- function(input, text_field = "text", dict = getOption("jliwc_di
   dfr <- data.frame(WC = WC) %>%
     dplyr::bind_cols(dict_proportion %>% quanteda::convert(to = "data.frame")) %>%
     dplyr::mutate(
-      Dic = 100 - .data[["nomatch"]]) %>% # % of dictionary words
+      Dic = 100 - .data[["nomatch"]]
+    ) %>% # % of dictionary words
     dplyr::select(-.data[["nomatch"]])
 
   # doc_id in the original data
@@ -117,13 +111,13 @@ liwc_analysis <- function(input, text_field = "text", dict = getOption("jliwc_di
 
   # Translate category names into Japanese
   if (lang == "ja") {
-    names(dfr)[names(dfr) %in% names(dict)] <- env$liwc_cat_ja
+    names(dfr)[names(dfr) %in% names(dict)] <- jliwc_env$liwc_cat_ja
   }
 
   # Add MeCab categories if pos_tag is true
   if (pos_tag) {
     # Add MeCab categories
-    MECAB_LOOKUP <- env$MECAB_LOOKUP
+    MECAB_LOOKUP <- jliwc_env$MECAB_LOOKUP
 
     text_pos <- text_df %>%
       dplyr::group_by(.data[[docid_field]]) %>%

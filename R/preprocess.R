@@ -31,7 +31,7 @@ preprocess <- function(text) {
     "^" = "\uFF3E", "_" = "\uFF3F", "`" = "\uFF40", "{" = "\uFF5B", "|" = "\uFF5C",
     "}" = "\uFF5D",
     # for special dictionary words (emoticons)
-    r"(\()"= "\uff3c\uff08", r"(\o)" = "\uff3c\u25cb",
+    r"(\()" = "\uff3c\uff08", r"(\o)" = "\uff3c\u25cb",
     # for escape sequences
     "\\r\\n" = "\\n", "\\r" = "\\n"
   )

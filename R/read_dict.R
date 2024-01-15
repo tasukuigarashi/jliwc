@@ -28,29 +28,26 @@ read_dict22 <- function(file) {
   dictliwc22
 }
 
-#' Read the dictionary and get English categories
+#' Read the LIWC dictionary
 #'
 #' @param file A file path of the dictionary
 #' @param format A format of the dictionary (LIWC2015 or LIWC22)
-#' @param dic_dir A directory path of the J-LIWC2015 dictionary
-#' @param mecab_dir A directory path of the MeCab dictionaries
+#'
 #' @importFrom quanteda dictionary
 #'
 #' @return A dictionary object
 #' @export
 #' @examples
+#'
 #' # Set up dictionaries
 #' setup_ipadic()
 #' setup_userdic()
 #' setup_jliwcdic() # choose a dictionary file from a local directory
 #'
 #' # Read the dictionary (LIWC2015 format)
-#' dictliwc <- read_dict()
-#' # Read the dictionary (LIWC22 format)
-#' dictliwc22 <- read_dict(format = "LIWC22")
+#' dictliwc <- read_dict(file.path(getOption("jliwc_project_home"), "Japanese_Dictionary.dic"))
 #'
-read_dict <- function(file = getOption("jliwc_dic_home"), format = c("LIWC2015", "LIWC22"), dic_dir = getOption("jliwc_dic_home"), mecab_dir = getOption("jliwc_project_home")) {
-
+read_dict <- function(file, format = c("LIWC2015", "LIWC22")) {
   format <- match.arg(format)
 
   if (format == "LIWC2015") {
