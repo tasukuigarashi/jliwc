@@ -32,7 +32,10 @@
 #' liwc_results <- x |> liwc_analysis()
 #' liwc_results
 #'
-liwc_analysis <- function(input, text_field = "text", dict = getOption("jliwc_dictfile"), lang = c("en", "ja"), pos_tag = TRUE, sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC")) {
+liwc_analysis <- function(input, text_field = "text",
+                          dict = getOption("jliwc_dictfile"), lang = c("en", "ja"),
+                          pos_tag = TRUE,
+                          sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC")) {
   # Default category labels are in English
   lang <- match.arg(lang)
 
@@ -77,7 +80,8 @@ liwc_analysis <- function(input, text_field = "text", dict = getOption("jliwc_di
   text_df <- input |>
     dplyr::mutate(!!text_field := preprocess(.data[[text_field]])) |>
     # mutate(text = preprocess(text)) |>
-    count_mecab(text_field = text_field, sys_dic = sys_dic, user_dic = user_dic, liwclike = TRUE)
+    count_mecab(text_field = text_field, sys_dic = sys_dic, user_dic = user_dic, liwclike = TRUE) |>
+    gibasa::prettify(col_select = c("token", "POS1"))
 
   # Calculate word count
   WC <- text_df |>

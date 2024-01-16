@@ -3,13 +3,14 @@
 #' @param format A format of the dictionary (LIWC2015 or LIWC22)
 #'
 #' @importFrom utils read.csv
+#' @return logical
 #'
-#' @export
 #' @examples
 #' setup_jliwcdic()
+#' @export
 #'
-setup_jliwcdic <- function(dir = getOption("jliwc_project_home"), format = getOption("jliwc_format", default = "LIWC2015")) {
-
+setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
+                           format = getOption("jliwc_format", default = "LIWC2015")) {
   format <- match.arg(format, c("LIWC2015", "LIWC22"))
 
   # Dictionary file name

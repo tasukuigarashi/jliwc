@@ -9,7 +9,7 @@ setup_ipadic(
   ipadic_dictname = "mecab-ipadic",
   tar_dic = "mecab-ipadic-2.7.0-20070801",
   ipadic_url = getOption("jliwc_IPADIC_url"),
-  check = TRUE
+  silent = FALSE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ setup_ipadic(
 
 \item{ipadic_url}{the URL of the tar file}
 
-\item{check}{whether to check if IPADIC is installed}
+\item{silent}{whether to print messages}
 }
 \description{
 Download and install IPADIC

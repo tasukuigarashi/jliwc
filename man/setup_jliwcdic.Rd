@@ -19,5 +19,4 @@ Set J-LIWC2015 dictionary path
 }
 \examples{
 setup_jliwcdic()
-
 }

@@ -8,7 +8,7 @@ setup_userdic(
   dir = getOption("jliwc_project_home"),
   user_dic = "user_dict.dic",
   userdic_url = getOption("jliwc_USERDIC_url"),
-  check = TRUE
+  silent = FALSE
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ setup_userdic(
 
 \item{userdic_url}{URL to the user dictionary file}
 
-\item{check}{check if the user dictionary file is properly installed}
+\item{silent}{whether to print messages}
 }
 \description{
 Setup J-LIWC2015 user dictionary
