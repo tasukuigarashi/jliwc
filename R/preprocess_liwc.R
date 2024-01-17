@@ -5,6 +5,9 @@
 #' @importFrom stringr str_remove_all str_split
 #' @importFrom stringi stri_remove_empty
 #'
+#' @return A character vector. Japanese characters that can be interpreted as
+#'  a word boundary `\b` in regular expressions are omitted from the original text.
+#'
 preprocess_liwc <- function(text) {
   text |>
     stringr::str_remove_all("\\*|:|\\|") |>

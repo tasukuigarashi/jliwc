@@ -33,6 +33,8 @@ Boolean, \code{TRUE} if the setup is successful,
 Download and install IPADIC
 }
 \examples{
+\dontrun{
 setup_ipadic()
+}
 
 }

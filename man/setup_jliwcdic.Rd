@@ -22,5 +22,8 @@ Boolean, \code{TRUE} if the setup is successful,
 Set J-LIWC2015 dictionary path
 }
 \examples{
+\dontrun{
 setup_jliwcdic()
+}
+
 }

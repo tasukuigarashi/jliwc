@@ -15,7 +15,9 @@
 #'   \code{FALSE} otherwise
 #'
 #' @examples
+#' \dontrun{
 #' setup_ipadic()
+#' }
 #'
 #' @export
 #'

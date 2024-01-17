@@ -9,6 +9,10 @@ preprocess_liwc(text)
 \arguments{
 \item{text}{A character vector}
 }
+\value{
+A character vector. Japanese characters that can be interpreted as
+a word boundary \verb{\\b} in regular expressions are omitted from the original text.
+}
 \description{
 Morphological analysis imitating LIWC's internal processing
 }

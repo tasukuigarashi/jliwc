@@ -8,7 +8,10 @@
 #'   \code{FALSE} otherwise
 #'
 #' @examples
+#' \dontrun{
 #' setup_jliwcdic()
+#' }
+#'
 #' @export
 #'
 setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),

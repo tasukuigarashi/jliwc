@@ -10,13 +10,20 @@ preprocess(text)
 \item{text}{A character vector}
 }
 \value{
-A character vector
+A character vector. The text is converted to lowercase,
+line breaks are replaced with \verb{\\n},
+numbers are replaced with half-width characters,
+and characters such as \code{!} and \code{@} are replaced with full-width characters.
 }
 \description{
 Preprocessing text for morphological analysis
 }
 \examples{
-x <- preprocess("\uff2f\uff2b\uff1f\uff12\u6642\u9593\u5f8c\u306b\uff01")
+
+\dontrun{
+# \uff2f\uff2b\uff1f\uff12\u6642\u9593\u5f8c\u306b\uff01
+x <- preprocess("OK、今日の２時に！\r\n")
 x
+}
 
 }

@@ -7,7 +7,7 @@
 #'
 #' @return A dictionary object
 #' @examples
-#'
+#' \dontrun{
 #' # Set up dictionaries
 #' setup_ipadic()
 #' setup_userdic()
@@ -15,6 +15,7 @@
 #'
 #' # Read the dictionary (LIWC2015 format)
 #' dictliwc <- read_dict(file.path(getOption("jliwc_project_home"), "Japanese_Dictionary.dic"))
+#' }
 #'
 #' @export
 #'

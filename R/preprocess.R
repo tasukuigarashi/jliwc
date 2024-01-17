@@ -5,10 +5,18 @@
 #' @importFrom stringr str_to_lower str_replace_all coll
 #' @importFrom stringi stri_trans_nfkc
 #'
-#' @return A character vector
+#' @return A character vector. The text is converted to lowercase,
+#'  line breaks are replaced with `\n`,
+#'  numbers are replaced with half-width characters,
+#'  and characters such as `!` and `@` are replaced with full-width characters.
+#'
 #' @examples
-#' x <- preprocess("\uff2f\uff2b\uff1f\uff12\u6642\u9593\u5f8c\u306b\uff01")
+#'
+#' \dontrun{
+#' # \uff2f\uff2b\uff1f\uff12\u6642\u9593\u5f8c\u306b\uff01
+#' x <- preprocess("OK、今日の２時に！\r\n")
 #' x
+#' }
 #'
 #' @export
 #'
@@ -34,7 +42,7 @@ preprocess <- function(text) {
     # for special dictionary words (emoticons)
     r"(\()" = "\uff3c\uff08", r"(\o)" = "\uff3c\u25cb",
     # for escape sequences
-    "\\r\\n" = "\\n", "\\r" = "\\n"
+    "\r\\n" = "\n", "\r" = "\n"
   )
 
   zenkaku_leftsingle <- "\xe2\x80\x98"

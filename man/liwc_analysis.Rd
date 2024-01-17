@@ -30,12 +30,13 @@ liwc_analysis(
 \item{user_dic}{A path to a MeCab user dictionary}
 }
 \value{
-A data frame with LIWC-style analysis results
+A data frame with LIWC-style analysis results. Rows are LIWC categories.
 }
 \description{
 LIWC-style analysis of Japanese text data
 }
 \examples{
+\dontrun{
 setup_ipadic()
 setup_userdic()
 setup_jliwcdic()
@@ -46,5 +47,15 @@ x
 
 liwc_results <- x |> liwc_analysis()
 liwc_results
+
+# data frame
+# The column name is "text" by default
+# Each row is a unique text
+texts_df <- data.frame(text = x)
+
+liwc_results_df <- texts_df |> liwc_analysis()
+
+dplyr::tibble(liwc_results_df) # Same output as liwc_results
+}
 
 }

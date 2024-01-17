@@ -16,11 +16,10 @@
 #' @importFrom stringi stri_remove_empty
 #' @importFrom quanteda as.tokens dfm dfm_lookup convert
 #'
-#' @return A data frame with LIWC-style analysis results
-#'
-#' @export
+#' @return A data frame with LIWC-style analysis results. Rows are LIWC categories.
 #'
 #' @examples
+#' \dontrun{
 #' setup_ipadic()
 #' setup_userdic()
 #' setup_jliwcdic()
@@ -31,6 +30,18 @@
 #'
 #' liwc_results <- x |> liwc_analysis()
 #' liwc_results
+#'
+#' # data frame
+#' # The column name is "text" by default
+#' # Each row is a unique text
+#' texts_df <- data.frame(text = x)
+#'
+#' liwc_results_df <- texts_df |> liwc_analysis()
+#'
+#' dplyr::tibble(liwc_results_df) # Same output as liwc_results
+#' }
+#'
+#' @export
 #'
 liwc_analysis <- function(input, text_field = "text",
                           dict = getOption("jliwc_dictfile"), lang = c("en", "ja"),

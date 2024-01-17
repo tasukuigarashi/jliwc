@@ -13,11 +13,13 @@
 #' @return A data frame
 #'
 #' @examples
+#' \dontrun{
 #' setup_ipadic()
 #' setup_userdic()
 #' setup_jliwcdic()
 #'
 #' gibasa::ginga[1:10] |> count_mecab()
+#' }
 #'
 #' @export
 #'

@@ -28,6 +28,8 @@ Boolean, \code{TRUE} if the setup is successful,
 Setup J-LIWC2015 user dictionary
 }
 \examples{
+\dontrun{
 setup_userdic()
+}
 
 }

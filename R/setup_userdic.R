@@ -9,7 +9,9 @@
 #'   \code{FALSE} otherwise
 #'
 #' @examples
+#' \dontrun{
 #' setup_userdic()
+#' }
 #'
 #' @export
 #'
