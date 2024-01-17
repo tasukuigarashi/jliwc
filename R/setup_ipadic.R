@@ -82,11 +82,13 @@ setup_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictname 
       return(TRUE)
     },
     warning = function(w) {
-      message("Error 1: IPADIC is not properly installed. Check the directory ", IPADIC, " and try installing again.\n")
+      message(w)
+      message("\nIPADIC is not properly installed. Check the directory ", IPADIC, " and try installing again.\n")
       return(FALSE)
     },
     error = function(e) {
-      message("Error 2: IPADIC is not properly installed. Check the directory ", IPADIC, " and try installing again.\n")
+      message(e)
+      message("\nIPADIC is not properly installed. Check the directory ", IPADIC, " and try installing again.\n")
       return(FALSE)
     }
   )

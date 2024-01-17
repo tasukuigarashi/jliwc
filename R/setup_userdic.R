@@ -63,11 +63,14 @@ setup_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "use
       return(TRUE)
     },
     warning = function(w) {
-      message("Error 1: User dictionary is not properly installed (the file might be broken). Try installing it again.\n")
+      # This warning is probably because of the broken file
+      message(w)
+      message("\nUser dictionary is not properly installed (the file might be broken). Try installing it again.\n")
       return(FALSE)
     },
     error = function(e) {
-      message("Error 2: User dictionary is not properly installed. Try installing it again.\n")
+      message(e)
+      message("\nUser dictionary is not properly installed. Try installing it again.\n")
       return(FALSE)
     }
   )

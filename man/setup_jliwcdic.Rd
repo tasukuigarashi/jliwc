@@ -6,13 +6,16 @@
 \usage{
 setup_jliwcdic(
   dir = getOption("jliwc_project_home"),
-  format = getOption("jliwc_format", default = "LIWC2015")
+  format = getOption("jliwc_format", default = "LIWC2015"),
+  silent = FALSE
 )
 }
 \arguments{
 \item{dir}{a path to the J-LIWC2015 dictionary}
 
 \item{format}{A format of the dictionary (LIWC2015 or LIWC22)}
+
+\item{silent}{Boolean. Whether to print messages}
 }
 \value{
 Boolean, \code{TRUE} if the setup is successful,

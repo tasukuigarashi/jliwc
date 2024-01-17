@@ -92,23 +92,19 @@ setup_jliwcdic(format = "LIWC22")
 
 # Sample texts
 # character vector
-texts <- gibasa::ginga[1:10]
-texts
+texts <- gibasa::ginga
+head(texts)
 #>  [1] "銀河鉄道の夜"
 #>  [2] "宮沢賢治"
 #>  [3] "一　午後の授業"
 #>  [4] "「ではみなさんは、そういうふうに川だと言われたり、乳の流れたあとだと言われたりしていた、..."
 #>  [5] "　カムパネルラが手をあげました。それから四、五人手をあげました。ジョバンニも手をあげようとして、..."
 #>  [6] "　ところが先生は早くもそれを見つけたのでした。"
-#>  [7] "「ジョバンニさん。あなたはわかっているのでしょう」"
-#>  [8] "　ジョバンニは勢いよく立ちあがりましたが、立ってみるともうはっきりとそれを答えることができないのでした。..."
-#>  [9] "「大きな望遠鏡で銀河をよっく調べると銀河はだいたい何でしょう」"
-#> [10] "　やっぱり星だとジョバンニは思いましたが、こんどもすぐに答えることができませんでした。"
 
 liwc_results <- texts |> liwc_analysis()
 
 dplyr::tibble(liwc_results)
-#> # A tibble: 10 × 85
+#> # A tibble: 553 × 85
 #>    doc_id    WC   Dic `function` pronoun ppron     i    we   you shehe  they
 #>    <chr>  <int> <dbl>      <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 #>  1 1          4  50         25      0        0     0     0     0     0     0
@@ -121,13 +117,14 @@ dplyr::tibble(liwc_results)
 #>  8 8         62  69.4       45.2    1.61     0     0     0     0     0     0
 #>  9 9         15  66.7       46.7    6.67     0     0     0     0     0     0
 #> 10 10        22  68.2       50      0        0     0     0     0     0     0
+#> # ℹ 543 more rows
 #> # ℹ 74 more variables: ipron <dbl>, casepart <dbl>, auxverb <dbl>,
 #> #   adverb <dbl>, conj <dbl>, negate <dbl>, verb <dbl>, interrog <dbl>,
 #> #   number <dbl>, quant <dbl>, adjverb <dbl>, preadj <dbl>, affect <dbl>,
 #> #   posemo <dbl>, negemo <dbl>, anx <dbl>, anger <dbl>, sad <dbl>,
 #> #   social <dbl>, family <dbl>, friend <dbl>, female <dbl>, male <dbl>,
 #> #   cogproc <dbl>, insight <dbl>, cause <dbl>, discrep <dbl>, tentat <dbl>,
-#> #   certain <dbl>, differ <dbl>, percept <dbl>, see <dbl>, hear <dbl>, …
+# ℹ Use `print(n = ...)` to see more row
 
 # data frame
 # The column name is "text" by default
@@ -155,4 +152,4 @@ psychometric properties of LIWC2015*. Austin, TX: University of Texas at Austin.
 
 ## License
 
-GPL-3
+GPL (>=3)

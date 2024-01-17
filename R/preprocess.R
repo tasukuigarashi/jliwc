@@ -11,9 +11,7 @@
 #'  and characters such as `!` and `@` are replaced with full-width characters.
 #'
 #' @examples
-#'
 #' \dontrun{
-#' # \uff2f\uff2b\uff1f\uff12\u6642\u9593\u5f8c\u306b\uff01
 #' x <- preprocess("OK、今日の２時に！\r\n")
 #' x
 #' }
