@@ -9,19 +9,25 @@ setup_ipadic(
   ipadic_dictname = "mecab-ipadic",
   tar_dic = "mecab-ipadic-2.7.0-20070801",
   ipadic_url = getOption("jliwc_IPADIC_url"),
-  check = TRUE
+  silent = FALSE
 )
 }
 \arguments{
-\item{dir}{the directory where IPADIC is installed}
+\item{dir}{A directory where IPADIC is installed
+(e.g., "C:/Users/username/Documents/J-LIWC2015/")}
 
-\item{ipadic_dictname}{the name of the directory where IPADIC is installed}
+\item{ipadic_dictname}{a name of the directory where IPADIC is installed
+(e.g., "C:/Users/username/Documents/J-LIWC2015/mecab-ipadic")}
 
-\item{tar_dic}{the name of the tar file}
+\item{tar_dic}{A name of the IPADIC tar file}
 
-\item{ipadic_url}{the URL of the tar file}
+\item{ipadic_url}{A URL of the IPADIC tar file}
 
-\item{check}{whether to check if IPADIC is installed}
+\item{silent}{Boolean. Whether to print messages}
+}
+\value{
+Boolean, \code{TRUE} if the setup is successful,
+\code{FALSE} otherwise
 }
 \description{
 Download and install IPADIC

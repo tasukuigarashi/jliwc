@@ -2,16 +2,16 @@
 % Please edit documentation in R/dictionary_info2.R
 \name{dictionary_info2}
 \alias{dictionary_info2}
-\title{function that calls \code{\link[gibasa]{dictionary_info}} with locally installed MeCab}
+\title{Function that calls \code{\link[gibasa]{gibasa::dictionary_info}} with locally installed MeCab}
 \usage{
 dictionary_info2(...)
 }
 \arguments{
-\item{...}{other arguments passed to \code{\link[gibasa]{dictionary_info}}}
+\item{...}{Other arguments passed to \code{\link[gibasa]{gibasa::dictionary_info}}}
 }
 \value{
-tokenized character vector
+Directory information of the dictionary
 }
 \description{
-function that calls \code{\link[gibasa]{dictionary_info}} with locally installed MeCab
+Function that calls \code{\link[gibasa]{gibasa::dictionary_info}} with locally installed MeCab
 }

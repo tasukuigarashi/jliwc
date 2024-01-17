@@ -2,18 +2,18 @@
 % Please edit documentation in R/tokenize2.R
 \name{tokenize2}
 \alias{tokenize2}
-\title{function that always set the temporary mecabrc environment variable}
+\title{Function that calls \code{\link[gibasa]{gibasa::tokenize}} with locally installed MeCab}
 \usage{
 tokenize2(x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{x}{Character vector}
 
-\item{...}{other arguments passed to \code{\link[gibasa]{tokenize}}}
+\item{...}{Other arguments passed to \code{\link[gibasa]{gibasa::tokenize}}}
 }
 \value{
 tokenized character vector
 }
 \description{
-function that always set the temporary mecabrc environment variable
+Function that calls \code{\link[gibasa]{gibasa::tokenize}} with locally installed MeCab
 }

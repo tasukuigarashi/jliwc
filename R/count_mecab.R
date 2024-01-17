@@ -12,7 +12,6 @@
 #'
 #' @return A data frame
 #'
-#' @export
 #' @examples
 #' setup_ipadic()
 #' setup_userdic()
@@ -20,10 +19,12 @@
 #'
 #' gibasa::ginga[1:10] |> count_mecab()
 #'
-count_mecab <- function(text, text_field = "text", sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC"), liwclike = TRUE) {
-
-  text_df <- tokenize2(text, text_field = text_field, sys_dic = sys_dic, user_dic = user_dic) |>
-    gibasa::prettify(col_select = c("token", "POS1"))
+#' @export
+#'
+count_mecab <- function(text, text_field = "text",
+                        sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC"),
+                        liwclike = TRUE) {
+  text_df <- tokenize2(text, text_field = text_field, sys_dic = sys_dic, user_dic = user_dic)
 
   # Exclude delimiters according to LIWC2015
   if (liwclike) {

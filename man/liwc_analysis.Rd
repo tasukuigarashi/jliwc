@@ -6,8 +6,8 @@
 \usage{
 liwc_analysis(
   input,
-  dict,
   text_field = "text",
+  dict = getOption("jliwc_dictfile"),
   lang = c("en", "ja"),
   pos_tag = TRUE,
   sys_dic = getOption("jliwc_IPADIC"),
@@ -15,19 +15,19 @@ liwc_analysis(
 )
 }
 \arguments{
-\item{input}{A data frame or a list of character vector to be analyzed}
+\item{input}{A data frame or a list of character vector to analyze}
+
+\item{text_field}{A column name of text data (if input is a data frame)}
 
 \item{dict}{A dictionary2 class object of J-LIWC2015 dictionary}
-
-\item{text_field}{A column name of the input data frame to be analyzed}
 
 \item{lang}{A character vector specifying language of the output tag (English or Japanese)}
 
 \item{pos_tag}{logical; if TRUE, add POS percentage in MeCab}
 
-\item{sys_dic}{A path to the MeCab system dictionary}
+\item{sys_dic}{A path to a MeCab system dictionary}
 
-\item{user_dic}{A path to the MeCab user dictionary}
+\item{user_dic}{A path to a MeCab user dictionary}
 }
 \value{
 A data frame with LIWC-style analysis results
@@ -40,9 +40,11 @@ setup_ipadic()
 setup_userdic()
 setup_jliwcdic()
 
-dict <- read_dict()
-
-x <- gibasa::ginga[1:10] |> liwc_analysis(dict = dict)
+# Sample Japanese texts from Night on the Galactic Railroad (Kenji Miyazawa)
+x <- gibasa::ginga[1:10]
 x
+
+liwc_results <- x |> liwc_analysis()
+liwc_results
 
 }

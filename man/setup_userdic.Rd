@@ -8,17 +8,21 @@ setup_userdic(
   dir = getOption("jliwc_project_home"),
   user_dic = "user_dict.dic",
   userdic_url = getOption("jliwc_USERDIC_url"),
-  check = TRUE
+  silent = FALSE
 )
 }
 \arguments{
-\item{dir}{home directory for J-LIWC2015}
+\item{dir}{A home directory for J-LIWC2015}
 
-\item{user_dic}{filename of the user dictionary file}
+\item{user_dic}{A file name of the user dictionary file}
 
-\item{userdic_url}{URL to the user dictionary file}
+\item{userdic_url}{A URL to the user dictionary file (default on GitHub)}
 
-\item{check}{check if the user dictionary file is properly installed}
+\item{silent}{Boolean. Whether to print messages}
+}
+\value{
+Boolean, \code{TRUE} if the setup is successful,
+\code{FALSE} otherwise
 }
 \description{
 Setup J-LIWC2015 user dictionary

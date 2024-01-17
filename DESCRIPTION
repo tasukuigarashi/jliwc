@@ -1,13 +1,14 @@
 Package: jliwc
-Title: What the Package Does (One Line, Title Case)
-Version: 0.1.0
+Title: jliwc: A Japanese text analyzer for J-LIWC dictionary
+Version: 0.2.0
 Authors@R: 
-    person("Tasuku", "Igarashi", , "igarashi.tasuku.n6@f.mail.nagoya-u.ac.jp", role = c("aut", "cre"),
+    person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9432-4425"))
-Description: What the package does (one paragraph).
+Description: This package provides functions to analyze Japanese text using J-LIWC, the Japanese version of LIWC (Linguistic Inquiry and Word Count).
+    The J-LIWC2015 dictionary is developed by Igarashi, Okuda, and Sasahara (2022) <https://doi.org/10.3389/fpsyg.2022.841534>. The dictionary file is available at <https://www.liwc.app/dictionaries> (LIWC-22) and <https://www.liwc.net/dictionaries> (LIWC2015) for academic and university license users (non-commercial use only).
 Depends:
     R (>= 4.2.0)
-License: MIT + file LICENSE
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -18,7 +19,7 @@ Imports:
     stringr,
     stringi,
     withr,
-    quanteda,
+    quanteda (>= 0.9.8),
     gibasa (>= 1.0.1)
 Suggests: 
     testthat (>= 3.0.0)

@@ -5,11 +5,12 @@
 #' @importFrom stringr str_to_lower str_replace_all coll
 #' @importFrom stringi stri_trans_nfkc
 #'
-#' @export
 #' @return A character vector
 #' @examples
 #' x <- preprocess("\uff2f\uff2b\uff1f\uff12\u6642\u9593\u5f8c\u306b\uff01")
 #' x
+#'
+#' @export
 #'
 preprocess <- function(text) {
   # characters_replace <- c(
@@ -31,7 +32,7 @@ preprocess <- function(text) {
     "^" = "\uFF3E", "_" = "\uFF3F", "`" = "\uFF40", "{" = "\uFF5B", "|" = "\uFF5C",
     "}" = "\uFF5D",
     # for special dictionary words (emoticons)
-    r"(\()"= "\uff3c\uff08", r"(\o)" = "\uff3c\u25cb",
+    r"(\()" = "\uff3c\uff08", r"(\o)" = "\uff3c\u25cb",
     # for escape sequences
     "\\r\\n" = "\\n", "\\r" = "\\n"
   )
