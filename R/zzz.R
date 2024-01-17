@@ -1,4 +1,15 @@
+#' jliwc
+#'
+#' This package provides functions to analyze Japanese text using J-LIWC,
+#' the Japanese version of LIWC (Linguistic Inquiry and Word Count).
+#'
+#' @docType package
+#' @name jliwc
+#' @aliases jliwc
+#'
 # Assign a package environment
+"_PACKAGE"
+
 jliwc_env <- new.env()
 
 # Read environmental variables defined in "jliwc_env.R"
@@ -9,16 +20,6 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
 
 # Set up parameters
 .onLoad <- function(libname, pkgname) {
-  # If run on Windows, get the home directory of users
-  # If run on Unix, get the user root directory ("~")
-  # if (Sys.info()["sysname"] == "Windows") {
-  #   # Windows ("C:/Users/username")
-  #   HOME <- Sys.getenv("USERPROFILE")
-  # } else {
-  #   # Unix ("/home/username")
-  #   HOME <- path.expand("~")
-  # }
-
   # Directory of the project
   HOME <- path.expand("~") # Windows ("C:/Users/username/Documents")
   SUB <- "J-LIWC2015"
@@ -60,7 +61,6 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   op <- options()
   op.jliwc <- list(
     jliwc_project_home = jliwc_project_home,
-    # jliwc_dic_home = jliwc_dic_home,
     jliwc_dictfile = jliwc_dictfile,
     jliwc_IPADIC = jliwc_IPADIC,
     jliwc_USERDIC = jliwc_USERDIC,

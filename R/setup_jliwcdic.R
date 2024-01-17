@@ -1,9 +1,11 @@
 #' Set J-LIWC2015 dictionary path
-#' @param dir path to the J-LIWC2015 dictionary
+#' @param dir a path to the J-LIWC2015 dictionary
 #' @param format A format of the dictionary (LIWC2015 or LIWC22)
 #'
 #' @importFrom utils read.csv
-#' @return logical
+#'
+#' @return Boolean, \code{TRUE} if the setup is successful,
+#'   \code{FALSE} otherwise
 #'
 #' @examples
 #' setup_jliwcdic()
@@ -68,7 +70,4 @@ setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
   options(jliwc_dictfile = dictliwc)
 
   message("The LIWC dictionary file '", dic_file, "' was successfully loaded.")
-
-  # options(jliwc_dic_home = normalizePath(dic, winslash = "/", mustWork = TRUE))
-  # cat("The path to the dictionary file was set to", dic, "\n")
 }

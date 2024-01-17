@@ -1,5 +1,5 @@
 Package: jliwc
-Title: Japanese text analysis using J-LIWC dictionary
+Title: jliwc: A Japanese text analyzer for J-LIWC dictionary
 Version: 0.2.0
 Authors@R: 
     person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),

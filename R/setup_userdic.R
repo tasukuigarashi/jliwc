@@ -1,9 +1,12 @@
 #' Setup J-LIWC2015 user dictionary
 #'
-#' @param dir home directory for J-LIWC2015
-#' @param user_dic filename of the user dictionary file
-#' @param userdic_url URL to the user dictionary file
-#' @param silent whether to print messages
+#' @param dir A home directory for J-LIWC2015
+#' @param user_dic A file name of the user dictionary file
+#' @param userdic_url A URL to the user dictionary file (default on GitHub)
+#' @param silent Boolean. Whether to print messages
+#'
+#' @return Boolean, \code{TRUE} if the setup is successful,
+#'   \code{FALSE} otherwise
 #'
 #' @examples
 #' setup_userdic()
@@ -14,18 +17,6 @@ setup_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "use
                           userdic_url = getOption("jliwc_USERDIC_url"), silent = FALSE) {
   USERDIC <- file.path(dir, user_dic)
 
-  # if (!file.exists(USERDIC)) {
-  #   download.file(userdic_url,
-  #     destfile = USERDIC, mode = "wb"
-  #   )
-  # }
-
-  # check if the user dictionary file exists at the home directory
-  # if it doesn't exist, ask users if they want to download it from GitHub
-  # if not, check if the user dictionary file exists at the current folder
-  # if it is at the current folder, prompt and copy it to the home directory
-  # if it is not at the current folder, prompt and ask the user to manually set the path to the user dictionary file
-  # finally, set USERDIC as the path to the user dictionary file
   check <- tryCatch(
     {
       if (!file.exists(USERDIC)) {
@@ -57,22 +48,6 @@ setup_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "use
             stop("The filename should be `", user_dic, "`.\n")
           }
         }
-
-        # check if the user dictionary file is properly installed
-        # check <- tryCatch(
-        #   dictionary_info2(sys_dic = getOption("jliwc_IPADIC"), user_dic = USERDIC),
-        #   error = function(e) {
-        #     cat("The J-LIWC2015 user dictionary (or IPADIC in some cases) is not properly installed.\n")
-        #     stop()
-        #   }
-        # )
-
-
-        # if check is nrow() == 0, then USERDIC is not installed
-        # if (nrow(check) == 0) {
-        #   cat("J-LIWC2015 user dictionary (or IPADIC) is not properly installed.\n")
-        #   stop()
-        # }
       } else if (file.info(USERDIC)$size == 0) {
         message("J-LIWC2015 user dictionary file is found at ", dir, " but the file size is 0.\n")
       }

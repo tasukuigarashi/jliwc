@@ -3,7 +3,9 @@ setup_userdic()
 setup_jliwcdic()
 
 test <- function() {
-  gibasa::ginga[1:10] |> liwc_analysis() |> dplyr::pull(WC)
+  gibasa::ginga[1:10] |>
+    liwc_analysis() |>
+    dplyr::pull(WC)
 }
 
 x <- test()

@@ -1,7 +1,7 @@
-#' function that always set the temporary mecabrc environment variable
+#' Function that calls \code{\link[gibasa]{gibasa::tokenize}} with locally installed MeCab
 #'
-#' @param x character vector
-#' @param ... other arguments passed to \code{\link[gibasa]{tokenize}}
+#' @param x Character vector
+#' @param ... Other arguments passed to \code{\link[gibasa]{gibasa::tokenize}}
 #'
 #' @importFrom withr with_envvar
 #' @importFrom gibasa tokenize

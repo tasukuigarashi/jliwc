@@ -10,9 +10,13 @@ setup_jliwcdic(
 )
 }
 \arguments{
-\item{dir}{path to the J-LIWC2015 dictionary}
+\item{dir}{a path to the J-LIWC2015 dictionary}
 
 \item{format}{A format of the dictionary (LIWC2015 or LIWC22)}
+}
+\value{
+Boolean, \code{TRUE} if the setup is successful,
+\code{FALSE} otherwise
 }
 \description{
 Set J-LIWC2015 dictionary path

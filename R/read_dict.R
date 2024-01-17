@@ -63,4 +63,3 @@ read_dict22 <- function(file) {
 
   dictliwc22
 }
-

@@ -1,13 +1,18 @@
 #' Download and install IPADIC
 #'
-#' @param dir the directory where IPADIC is installed
-#' @param ipadic_dictname the name of the directory where IPADIC is installed
-#' @param tar_dic the name of the tar file
-#' @param ipadic_url the URL of the tar file
-#' @param silent whether to print messages
+#' @param dir A directory where IPADIC is installed
+#'   (e.g., "C:/Users/username/Documents/J-LIWC2015/")
+#' @param ipadic_dictname a name of the directory where IPADIC is installed
+#'   (e.g., "C:/Users/username/Documents/J-LIWC2015/mecab-ipadic")
+#' @param tar_dic A name of the IPADIC tar file
+#' @param ipadic_url A URL of the IPADIC tar file
+#' @param silent Boolean. Whether to print messages
 #'
 #' @importFrom utils download.file
 #' @importFrom gibasa build_sys_dic
+#'
+#' @return Boolean, \code{TRUE} if the setup is successful,
+#'   \code{FALSE} otherwise
 #'
 #' @examples
 #' setup_ipadic()
@@ -17,9 +22,6 @@
 setup_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictname = "mecab-ipadic",
                          tar_dic = "mecab-ipadic-2.7.0-20070801", ipadic_url = getOption("jliwc_IPADIC_url"),
                          silent = FALSE) {
-  # check if IPADIC is installed at the home directory
-  # if so, prompt the message and set IPADIC as the path to the dictionary
-  # if not, prompt the message and install IPADIC
   IPADIC <- file.path(dir, ipadic_dictname)
 
   # Main
@@ -41,7 +43,6 @@ setup_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictname 
 
         # install IPADIC at the home directory
         if (install == 1 | install == "") {
-          # if (!file.exists(file.path(IPADIC, "dicrc"))) {
           # make a directory "mecab-ipadic" in the home directory
           if (!dir.exists(IPADIC)) dir.create(IPADIC, recursive = TRUE)
           # Download IPADIC
@@ -64,14 +65,6 @@ setup_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictname 
           file.remove(ipadic_tar)
           # remove temporary directory
           unlink(tar_dic, recursive = TRUE)
-          # } else {
-          # cat("IPADIC is already installed at", dir)
-          # cat("If you want to reinstall IPADIC, delete all the files in the directory and call the install_ipadic() again.\n")
-          # stop()
-          # }
-
-          # Sys.setenv("IPADIC" = IPADIC)
-          # IPADIC <- file.path(dic_home, "mecab-ipadic")
         } else {
           cat("Please choose the dictionary file of IPADIC (sys.dic).\n")
           IPADIC <- file.choose() |> dirname()
