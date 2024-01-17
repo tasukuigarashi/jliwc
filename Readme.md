@@ -36,11 +36,12 @@ the [LIWC website](https://www.liwc.app/buy) for more information.
 <!-- write a sentence to explain installation from github -->
 
 You can install the released version of **jliwc** from
-[GitHub](https://github.com/tasukuigarashi/jliwc).
+[GitHub](https://github.com/tasukuigarashi/jliwc). Windows users need to
+install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first.
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("tasukuigarashi/jliwc")
+# install.packages("remotes")
+remotes::install_github("tasukuigarashi/jliwc")
 ```
 
 <!-- Explain users need to download J-LIWC dictionary file from LIWC website -->
@@ -81,14 +82,15 @@ setup_jliwcdic(format = "LIWC22")
 ```
 
 By default, all dictionaries are installed at `J-LIWC2015` directory
-under your home directory (e.g., `C:/Users/username/J-LIWC2015/` on
-Windows). However, you may fail to install the dictionaries if there are
-non-ASCII characters or spaces in the home directory path (e.g.,
-`C:/Users/山田　太郎/`). If you want to install the dictionaries at a
-different directory, you can specify the directory path by the
-`options("jliwc_project_home")`. It is strongly recommended that the
-dictionary path is named with ASCII (one-byte alphabetical or numeric)
-characters with no spaces (e.g., `C:/JLIWC`).
+under your home directory (e.g.,
+`C:/Users/username/Documents/J-LIWC2015/` on Windows). However, you may
+fail to install the dictionaries if there are non-ASCII characters or
+spaces in the home directory path (e.g., `C:/Users/山田　太郎/`). If you
+want to install the dictionaries at a different directory, you can
+specify the directory path by the `options("jliwc_project_home")`. It is
+strongly recommended that the dictionary path is named with ASCII
+(one-byte alphabetical or numeric) characters with no spaces (e.g.,
+`C:/JLIWC`).
 
 ``` r
 # Set a dictionary path
@@ -119,8 +121,9 @@ setup_userdic()
 setup_jliwcdic(format = "LIWC22")
 
 # Sample texts
-x <- gibasa::ginga[1:10]
-x
+# character vector
+texts <- gibasa::ginga[1:10]
+texts
 #>  [1] "銀河鉄道の夜"
 #>  [2] "宮沢賢治"
 #>  [3] "一　午後の授業"
@@ -132,7 +135,7 @@ x
 #>  [9] "「大きな望遠鏡で銀河をよっく調べると銀河はだいたい何でしょう」"
 #> [10] "　やっぱり星だとジョバンニは思いましたが、こんどもすぐに答えることができませんでした。"
 
-liwc_results <- x |> liwc_analysis()
+liwc_results <- texts |> liwc_analysis()
 
 dplyr::tibble(liwc_results)
 #> # A tibble: 10 × 85
@@ -155,6 +158,16 @@ dplyr::tibble(liwc_results)
 #> #   social <dbl>, family <dbl>, friend <dbl>, female <dbl>, male <dbl>,
 #> #   cogproc <dbl>, insight <dbl>, cause <dbl>, discrep <dbl>, tentat <dbl>,
 #> #   certain <dbl>, differ <dbl>, percept <dbl>, see <dbl>, hear <dbl>, …
+
+# data frame
+# The column name is "text" by default
+# Each row is a unique text
+texts_df <- data.frame(text = texts)
+
+liwc_results_df <- texts_df |> liwc_analysis()
+
+dplyr::tibble(liwc_results_df)
+#> ...
 ```
 
 ## Notes

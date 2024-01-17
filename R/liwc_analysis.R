@@ -75,7 +75,7 @@ liwc_analysis <- function(input, text_field = "text",
 
   # Stop if dictionary is not a dictionary2 class object
   if (!inherits(dict, "dictionary2")) {
-    stop("'dict' must be a quanteda dictionary2 class object.")
+    stop("The dictionary must be a quanteda dictionary2 class object. Please check if you have run 'setup_jliwcdic()' to load the dictionary.")
   }
 
   # Stop if text_field is not in input

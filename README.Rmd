@@ -31,11 +31,11 @@ Using the J-LIWC2015 dictionary file requires users to have a valid academic and
 ## Installation
 
 <!-- write a sentence to explain installation from github -->
-You can install the released version of **jliwc** from [GitHub](https://github.com/tasukuigarashi/jliwc).
+You can install the released version of **jliwc** from [GitHub](https://github.com/tasukuigarashi/jliwc). Windows users may need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first.
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("tasukuigarashi/jliwc")
+# install.packages("remotes")
+remotes::install_github("tasukuigarashi/jliwc")
 ```
 
 <!-- Explain users need to download J-LIWC dictionary file from LIWC website -->
