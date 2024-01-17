@@ -1,8 +1,9 @@
-#' Function that calls \code{\link[gibasa]{gibasa::dictionary_info}} with locally installed MeCab
+#' Function that calls \code{\link[gibasa:dictionary_info]{dictionary_info}}
+#'  with locally installed MeCab
 #'
-#' @param ... Other arguments passed to \code{\link[gibasa]{gibasa::dictionary_info}}
+#' @param ... Other arguments passed to \code{\link[gibasa:dictionary_info]{dictionary_info}}
 #' @return Directory information of the dictionary
-#' @importFrom Withr with_envvar
+#' @importFrom withr with_envvar
 #' @importFrom gibasa dictionary_info
 #'
 dictionary_info2 <- function(...) {

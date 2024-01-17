@@ -2,18 +2,20 @@
 % Please edit documentation in R/tokenize2.R
 \name{tokenize2}
 \alias{tokenize2}
-\title{Function that calls \code{\link[gibasa]{gibasa::tokenize}} with locally installed MeCab}
+\title{Function that calls \code{\link[gibasa:tokenize]{tokenize}}
+with locally installed MeCab}
 \usage{
 tokenize2(x, ...)
 }
 \arguments{
 \item{x}{Character vector}
 
-\item{...}{Other arguments passed to \code{\link[gibasa]{gibasa::tokenize}}}
+\item{...}{Other arguments passed to \code{\link[gibasa:tokenize]{tokenize}}}
 }
 \value{
 tokenized character vector
 }
 \description{
-Function that calls \code{\link[gibasa]{gibasa::tokenize}} with locally installed MeCab
+Function that calls \code{\link[gibasa:tokenize]{tokenize}}
+with locally installed MeCab
 }

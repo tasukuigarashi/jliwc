@@ -1,7 +1,8 @@
-#' Function that calls \code{\link[gibasa]{gibasa::tokenize}} with locally installed MeCab
+#' Function that calls \code{\link[gibasa:tokenize]{tokenize}}
+#' with locally installed MeCab
 #'
 #' @param x Character vector
-#' @param ... Other arguments passed to \code{\link[gibasa]{gibasa::tokenize}}
+#' @param ... Other arguments passed to \code{\link[gibasa:tokenize]{tokenize}}
 #'
 #' @importFrom withr with_envvar
 #' @importFrom gibasa tokenize
