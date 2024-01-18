@@ -1,9 +1,11 @@
 #' Set J-LIWC2015 dictionary path
 #' @param dir a path to the J-LIWC2015 dictionary
-#' @param format A format of the dictionary (LIWC2015 or LIWC22)
+#' @param format A format of the dictionary (LIWC2015 or LIWC22).
+#' Use this option if the dictionary type is not automatically detected.
 #' @param silent Boolean. Whether to print messages
 #'
 #' @importFrom utils read.csv
+#' @importFrom withr with_dir
 #'
 #' @return Boolean, \code{TRUE} if the setup is successful,
 #'   \code{FALSE} otherwise
@@ -18,76 +20,89 @@
 setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
                            format = getOption("jliwc_format", default = "LIWC2015"),
                            silent = FALSE) {
-  check <- tryCatch(
-    {
-      # Check the format
-      format <- match.arg(format, c("LIWC2015", "LIWC22"))
+  # set the temporary directory to avoid errors to install IPADIC
+  # to the path including full-byte characters
+  temp_dir <- tempdir()
+  withr::with_dir(temp_dir, {
+    check <- tryCatch(
+      {
+        # Check the format
+        format <- match.arg(format, c("LIWC2015", "LIWC22"))
 
-      # Dictionary file name
-      dic_format <- c(LIWC2015 = "Japanese_Dictionary.dic", LIWC22 = "LIWC2015 Dictionary - Japanese.dicx")
-      dic_file <- dic_format[[format]]
+        # Dictionary file name
+        dic_format <- c(LIWC2015 = "Japanese_Dictionary.dic", LIWC22 = "LIWC2015 Dictionary - Japanese.dicx")
+        dic_file <- dic_format[[format]]
 
-      dic <- file.path(dir, dic_file)
+        # dic <- file.path(dir, dic_file)
+        # dic <- path.expand(dic)
 
-      dic <- path.expand(dic)
-      isdir <- file.info(dic)$isdir
+        dic <- file.path(dir, dic_format) |> path.expand()
 
-      if (isdir | !file.exists(dic)) {
-        # dir <- ifelse(isdir, dic, dirname(dic))
+        isdir <- file.info(dic)$isdir
+        isdic <- file.exists(dic)
 
-        # Copy the dictionary file to the home directory
-        cat("The LIWC dictionary file '", dic_file, "' was not found at ", dir, "\n\n", sep = "")
-        cat("You have two options:\n\n")
-        # choose 1 or 2
-        cat("1. Read the dictionary file, copy it to ", dir, " for later use (default)\n", sep = "")
-        cat("2. Only read the dictionary file (do not copy it)\n\n", sep = "")
-        cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
-        copy <- readline()
+        if (any(isdir, na.rm = TRUE) | !any(isdic)) {
+          # dir <- ifelse(isdir, dic, dirname(dic))
 
-        while (!copy %in% 1:2) {
+          # Copy the dictionary file to the home directory
+          cat("The LIWC dictionary file '", dic_file, "' was not found at ", dir, "\n\n", sep = "")
+          cat("You have two options:\n\n")
+          # choose 1 or 2
+          cat("1. Read the dictionary file, copy it to ", dir, " for later use (default)\n", sep = "")
+          cat("2. Only read the dictionary file (do not copy it)\n\n", sep = "")
           cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
           copy <- readline()
-        }
 
-        # choose the dictionary file
-        cat("Please choose the dictionary file (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n\n")
-        dic <- file.choose()
-
-        # Stop if dic does not match dic_file
-        if (basename(dic) != dic_file) {
-          stop("The dictionary file must be named '", dic_file, "'.", call. = FALSE)
-        }
-
-        dictliwc <- read_dict(dic, format = format)
-
-        # Copy the dictionary file to the home directory
-        if (copy == 1) {
-          if (!dir.exists(dir)) {
-            dir.create(dir, recursive = TRUE)
+          while (!copy %in% 1:2) {
+            cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
+            copy <- readline()
           }
 
-          file.copy(from = dic, to = dir)
-          cat("The dictionary file was copied to ", dir, "\n")
-          dic <- file.path(dir, basename(dic))
-        }
-      } else {
-        dictliwc <- read_dict(dic, format = format)
-      }
+          # choose the dictionary file
+          cat("Please choose the dictionary file (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n\n")
+          dic <- file.choose()
 
-      if (!silent) message("The LIWC dictionary file '", dic_file, "' was successfully loaded.")
-      options(jliwc_dictfile = dictliwc)
-      # Set the option for the dictionary file
-      return(TRUE)
-    },
-    warning = function(w) {
-      message(w)
-      message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
-      return(FALSE)
-    },
-    error = function(e) {
-      message(e)
-      message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
-      return(FALSE)
-    }
-  )
+          # Stop if dic does not match dic_file
+          if (!basename(dic) %in% dic_format) {
+            stop("The dictionary file must be named '", paste(dic_format, collapse = "', '"), "'.", call. = FALSE)
+          }
+
+          # Read the dictionary file
+          format <- names(dic_format)[dic_format == basename(dic)]
+          dictliwc <- read_dict(dic, format = format)
+
+          # Copy the dictionary file to the home directory
+          if (copy == 1) {
+            if (!dir.exists(dir)) {
+              dir.create(dir, recursive = TRUE)
+            }
+
+            file.copy(from = dic, to = dir)
+            message("The dictionary file was copied to ", dir, "\n")
+            dic <- file.path(dir, basename(dic)) # Not necessary
+            dic_file <- basename(dic)
+          }
+        } else {
+          dic_file <- basename(dic[isdic])
+          dictliwc <- read_dict(dic[isdic], format = names(dic_format)[isdic])
+        }
+
+        if (!silent) message("The LIWC dictionary file '", dic_file, "' was successfully loaded from ", dir, "\n")
+        options(jliwc_dictfile = dictliwc)
+        # Set the option for the dictionary file
+        return(TRUE)
+      },
+      warning = function(w) {
+        message(w)
+        message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
+        return(FALSE)
+      },
+      error = function(e) {
+        message(e)
+        message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
+        return(FALSE)
+      }
+    )
+  })
+  invisible(check)
 }

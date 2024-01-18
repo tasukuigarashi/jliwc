@@ -13,7 +13,8 @@ setup_jliwcdic(
 \arguments{
 \item{dir}{a path to the J-LIWC2015 dictionary}
 
-\item{format}{A format of the dictionary (LIWC2015 or LIWC22)}
+\item{format}{A format of the dictionary (LIWC2015 or LIWC22).
+Use this option if the dictionary type is not automatically detected.}
 
 \item{silent}{Boolean. Whether to print messages}
 }
