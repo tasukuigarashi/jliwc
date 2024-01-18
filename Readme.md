@@ -36,8 +36,9 @@ the [LIWC website](https://www.liwc.app/buy) for more information.
 <!-- write a sentence to explain installation from github -->
 
 You can install the released version of **jliwc** from
-[GitHub](https://github.com/tasukuigarashi/jliwc). Windows users need to
-install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first.
+[GitHub](https://github.com/tasukuigarashi/jliwc). Windows users may
+need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+first.
 
 ``` r
 # install.packages("remotes")
@@ -83,14 +84,15 @@ setup_jliwcdic(format = "LIWC22")
 
 By default, all dictionaries are installed at `J-LIWC2015` directory
 under your home directory (e.g.,
-`C:/Users/username/Documents/J-LIWC2015/` on Windows). However, you may
+`C:/Users/username/Documents/J-LIWC2015` or
+`C:/Users/username/OneDrive/Documents` on Windows). However, you may
 fail to install the dictionaries if there are non-ASCII characters or
-spaces in the home directory path (e.g., `C:/Users/山田　太郎/`). If you
-want to install the dictionaries at a different directory, you can
-specify the directory path by the `options("jliwc_project_home")`. It is
-strongly recommended that the dictionary path is named with ASCII
-(one-byte alphabetical or numeric) characters with no spaces (e.g.,
-`C:/JLIWC`).
+spaces in the home directory path (e.g., `C:/Users/山田　太郎` or
+`C:/Users/username/OneDrive/ドキュメント`). If you want to install the
+dictionaries at a different directory, you can specify the directory
+path by the `options("jliwc_project_home")`. It is strongly recommended
+that the dictionary path is named with ASCII (one-byte alphabetical or
+numeric) characters with no spaces (e.g., `C:/JLIWC`).
 
 ``` r
 # Set a dictionary path
@@ -107,6 +109,8 @@ installed files.
 
 ## Usage
 
+### Analyze a column in a data frame
+
 After you set up and load the dictionaries, you can use the
 `liwc_analysis()` function to analyze Japanese texts. The function
 preprocesses the texts (including word segmentation by IPAdic) and
@@ -121,24 +125,23 @@ setup_userdic()
 setup_jliwcdic(format = "LIWC22")
 
 # Sample texts
-# character vector
-texts <- gibasa::ginga[1:10]
-texts
+texts <- gibasa::ginga
+head(texts)
 #>  [1] "銀河鉄道の夜"
 #>  [2] "宮沢賢治"
 #>  [3] "一　午後の授業"
 #>  [4] "「ではみなさんは、そういうふうに川だと言われたり、乳の流れたあとだと言われたりしていた、..."
 #>  [5] "　カムパネルラが手をあげました。それから四、五人手をあげました。ジョバンニも手をあげようとして、..."
 #>  [6] "　ところが先生は早くもそれを見つけたのでした。"
-#>  [7] "「ジョバンニさん。あなたはわかっているのでしょう」"
-#>  [8] "　ジョバンニは勢いよく立ちあがりましたが、立ってみるともうはっきりとそれを答えることができないのでした。..."
-#>  [9] "「大きな望遠鏡で銀河をよっく調べると銀河はだいたい何でしょう」"
-#> [10] "　やっぱり星だとジョバンニは思いましたが、こんどもすぐに答えることができませんでした。"
 
-liwc_results <- texts |> liwc_analysis()
+# Create a data frame
+# The column name should be "text" by default
+texts_df <- data.frame(text = texts)
 
-dplyr::tibble(liwc_results)
-#> # A tibble: 10 × 85
+liwc_results_df <- texts_df |> liwc_analysis()
+
+dplyr::tibble(liwc_results_df)
+#> # A tibble: 553 × 85
 #>    doc_id    WC   Dic `function` pronoun ppron     i    we   you shehe  they
 #>    <chr>  <int> <dbl>      <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
 #>  1 1          4  50         25      0        0     0     0     0     0     0
@@ -151,24 +154,81 @@ dplyr::tibble(liwc_results)
 #>  8 8         62  69.4       45.2    1.61     0     0     0     0     0     0
 #>  9 9         15  66.7       46.7    6.67     0     0     0     0     0     0
 #> 10 10        22  68.2       50      0        0     0     0     0     0     0
+#> # ℹ 543 more rows
 #> # ℹ 74 more variables: ipron <dbl>, casepart <dbl>, auxverb <dbl>,
 #> #   adverb <dbl>, conj <dbl>, negate <dbl>, verb <dbl>, interrog <dbl>,
 #> #   number <dbl>, quant <dbl>, adjverb <dbl>, preadj <dbl>, affect <dbl>,
 #> #   posemo <dbl>, negemo <dbl>, anx <dbl>, anger <dbl>, sad <dbl>,
 #> #   social <dbl>, family <dbl>, friend <dbl>, female <dbl>, male <dbl>,
 #> #   cogproc <dbl>, insight <dbl>, cause <dbl>, discrep <dbl>, tentat <dbl>,
-#> #   certain <dbl>, differ <dbl>, percept <dbl>, see <dbl>, hear <dbl>, …
+# ℹ Use `print(n = ...)` to see more row
 
-# data frame
-# The column name is "text" by default
-# Each row is a unique text
-texts_df <- data.frame(text = texts)
+# You can also directly analyze a character vector
+liwc_results <- texts |> liwc_analysis()
 
-liwc_results_df <- texts_df |> liwc_analysis()
-
-dplyr::tibble(liwc_results_df)
-#> ...
+dplyr::tibble(liwc_results)
+#> ... (same as above)
 ```
+
+### Read and analyze text files
+
+To read text files, you can use the `read_text_files()` function. The
+function takes a character vector of file paths or a directory path and
+returns a data frame that contains the text contents. You can directly
+pass the output of `read_text_files()` to `liwc_analysis()`.
+
+``` r
+# Download and extract the NUCC data (Nagoya University Conversation Corpus)
+temp_zip_file <- tempfile(fileext = ".zip")
+temp_dir <- tempdir()
+
+download.file(url = "https://mmsrv.ninjal.ac.jp/nucc/nucc.zip", dest = temp_zip_file, mode = "wb")
+unzip(zipfile = temp_zip_file, exdir = temp_dir)
+
+# Set the directory path
+nucc_dir <- file.path(temp_dir, "nucc")
+
+# Create a list of text files
+text_files <- list.files(nucc_dir, pattern = "\\.txt$", full.names = TRUE)
+
+head(text_files)
+#> [1] "C:\\Users\\username\\AppData\\Local\\Temp\\RtmpCMTg7o/nucc/data001.txt"
+#> [2] "C:\\Users\\username\\AppData\\Local\\Temp\\RtmpCMTg7o/nucc/data002.txt"
+#> [3] "C:\\Users\\username\\AppData\\Local\\Temp\\RtmpCMTg7o/nucc/data003.txt"
+#> [4] "C:\\Users\\username\\AppData\\Local\\Temp\\RtmpCMTg7o/nucc/data004.txt"
+#> [5] "C:\\Users\\username\\AppData\\Local\\Temp\\RtmpCMTg7o/nucc/data005.txt"
+#> [6] "C:\\Users\\username\\AppData\\Local\\Temp\\RtmpCMTg7o/nucc/data006.txt"
+
+# Read the text files
+# input as file names
+files1 <- read_text_files(text_files)
+#> Number of files read: 129
+#> Total bytes: 7843788
+
+# You can also use a directory path as an input
+# The result is the same as `files1`
+files2 <- read_text_files(nucc_dir, filetype = "txt")
+#> Number of files read: 129
+#> Total bytes: 7843788
+
+# Analyze the text files
+# Note that no preprocessing is performed for demonstration purposes
+liwc_results_files <- files1 |> liwc_analysis()
+dplyr::tibble(liwc_results_files)
+```
+
+Practically, before analyzing texts using LIWC, it is crucial to
+preprocess the texts to ensure accurate and meaningful results. This
+preprocessing typically involves cleaning the text data by removing
+elements that are irrelevant to the analysis. For instance, this can
+include stripping away HTML tags, which are common in web-sourced texts
+but irrelevant to linguistic analysis. Additionally, one should remove
+information such as metadata, non-lexical items, or any kind of coding
+that does not contribute to the natural linguistic content. This
+preprocessing step is vital because LIWC analyzes text based on word
+frequencies and categories, and non-lexical items or irrelevant tags can
+distort these frequencies, leading to skewed or inaccurate
+interpretations of the data.
 
 ## Notes
 
@@ -195,4 +255,4 @@ University of Texas at Austin.
 
 ## License
 
-GPL-3
+GPL (\>=3) © Tasuku Igarashi

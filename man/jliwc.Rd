@@ -2,8 +2,8 @@
 % Please edit documentation in R/zzz.R
 \docType{package}
 \name{jliwc}
+\alias{jliwc-package}
 \alias{jliwc}
-\alias{_PACKAGE}
 \title{jliwc}
 \description{
 This package provides functions to analyze Japanese text using J-LIWC,
