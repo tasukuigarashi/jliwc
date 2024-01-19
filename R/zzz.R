@@ -46,6 +46,8 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   jliwc_format <- LIWCFORMAT
 
   # IPADIC (directory)
+  jliwc_IPADIC_dir <- IPADIC
+
   jliwc_IPADIC <- normalizePath(file.path(jliwc_project_home, IPADIC),
     winslash = "/", mustWork = FALSE
   )
@@ -62,6 +64,7 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   op.jliwc <- list(
     jliwc_project_home = jliwc_project_home,
     jliwc_dictfile = jliwc_dictfile,
+    jliwc_IPADIC_dir = jliwc_IPADIC_dir,
     jliwc_IPADIC = jliwc_IPADIC,
     jliwc_USERDIC = jliwc_USERDIC,
     jliwc_IPADIC_url = jliwc_IPADIC_url,

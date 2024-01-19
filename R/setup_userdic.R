@@ -1,4 +1,4 @@
-#' Setup J-LIWC2015 user dictionary
+#' Download and install J-LIWC2015 user dictionary
 #'
 #' @param dir A home directory for J-LIWC2015
 #' @param user_dic A file name of the user dictionary file
@@ -12,21 +12,21 @@
 #'
 #' @examples
 #' \dontrun{
-#' setup_userdic()
+#' install_userdic()
 #' }
 #'
 #' @export
 #'
-setup_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "user_dict.dic",
-                          userdic_url = getOption("jliwc_USERDIC_url"), silent = FALSE) {
+install_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "user_dict.dic",
+                            userdic_url = getOption("jliwc_USERDIC_url"), silent = FALSE) {
   # set the temporary directory to avoid errors to install IPADIC
   # to the path including full-byte characters
   temp_dir <- tempdir()
   withr::with_dir(temp_dir, {
-    USERDIC <- file.path(dir, user_dic)
-
     check <- tryCatch(
       {
+        USERDIC <- file.path(dir, user_dic)
+
         if (!file.exists(USERDIC)) {
           cat("J-LIWC2015 user dictionary is not installed at", dir, "\n")
           cat("Do you want to download the user dictionary file from GitHub and install?\n")
@@ -81,6 +81,48 @@ setup_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "use
       }
     )
   })
+
+  invisible(check)
+}
+
+#' Load user dictionary
+#'
+#' @param dir A directory where IPADIC is installed
+#' @param user_dic a name of the directory where a user dictionary is installed
+#' @param silent Boolean. Whether to print messages
+#'
+#' @return Boolean, \code{TRUE} if the setup is successful, \code{FALSE} otherwise
+#'
+#' @examples
+#' \dontrun{
+#' load_userdic()
+#' }
+#' @export
+#'
+load_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "user_dict.dic",
+                         silent = FALSE) {
+  check <- tryCatch(
+    {
+      USERDIC <- file.path(dir, user_dic)
+
+      # check if the user dictionary file is properly installed
+      dictionary_info2(sys_dic = getOption("jliwc_IPADIC"), user_dic = USERDIC)
+      # Success
+      if (!silent) message("User dictionary is installed at ", USERDIC, "\n")
+      return(TRUE)
+    },
+    warning = function(w) {
+      # This warning is probably because of the broken file
+      message(w)
+      message("\nUser dictionary is not properly installed (the file might be broken). Check the directory at ", USERDIC, "\n")
+      return(FALSE)
+    },
+    error = function(e) {
+      message(e)
+      message("\nUser dictionary is not properly installed. Check the directory at ", USERDIC, "\n")
+      return(FALSE)
+    }
+  )
 
   invisible(check)
 }

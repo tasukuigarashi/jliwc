@@ -1,5 +1,5 @@
-setup_ipadic()
-setup_userdic()
+load_ipadic()
+load_userdic()
 setup_jliwcdic()
 
 test <- function() {
