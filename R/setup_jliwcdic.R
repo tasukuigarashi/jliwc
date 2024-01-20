@@ -1,4 +1,4 @@
-#' Set J-LIWC2015 dictionary path
+#' Install J-LIWC dictionary file
 #' @param dir a path to the J-LIWC2015 dictionary
 #' @param format A format of the dictionary (LIWC2015 or LIWC22).
 #' Use this option if the dictionary type is not automatically detected.
@@ -12,12 +12,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' setup_jliwcdic()
+#' install_jliwcdic()
 #' }
 #'
 #' @export
 #'
-setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
+install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
                            format = getOption("jliwc_format", default = "LIWC2015"),
                            silent = FALSE) {
   # set the temporary directory to avoid errors to install IPADIC
@@ -30,11 +30,7 @@ setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         format <- match.arg(format, c("LIWC2015", "LIWC22"))
 
         # Dictionary file name
-        dic_format <- c(LIWC2015 = "Japanese_Dictionary.dic", LIWC22 = "LIWC2015 Dictionary - Japanese.dicx")
-        dic_file <- dic_format[[format]]
-
-        # dic <- file.path(dir, dic_file)
-        # dic <- path.expand(dic)
+        dic_format <- getOption("jliwc_dic_filename")
 
         dic <- file.path(dir, dic_format) |> path.expand()
 
@@ -45,11 +41,12 @@ setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
           # dir <- ifelse(isdir, dic, dirname(dic))
 
           # Copy the dictionary file to the home directory
-          cat("The LIWC dictionary file '", dic_file, "' was not found at ", dir, "\n\n", sep = "")
+          cat("The LIWC dictionary file '", paste0(dic_format, collapse = "', '"),
+              "' was not found at ", dir, "\n\n", sep = "")
           cat("You have two options:\n\n")
           # choose 1 or 2
-          cat("1. Read the dictionary file, copy it to ", dir, " for later use (default)\n", sep = "")
-          cat("2. Only read the dictionary file (do not copy it)\n\n", sep = "")
+          cat("1. Install the dictionary file at ", dir, " (for later use) and load it (default)\n", sep = "")
+          cat("2. Only load the dictionary file (do not copy it)\n\n", sep = "")
           cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
           copy <- readline()
 
@@ -106,3 +103,4 @@ setup_jliwcdic <- function(dir = getOption("jliwc_project_home"),
   })
   invisible(check)
 }
+

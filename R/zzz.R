@@ -23,11 +23,12 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   # Directory of the project
   HOME <- path.expand("~") # Windows ("C:/Users/username/Documents")
   SUB <- "J-LIWC2015"
-  DICDIR <- "dic"
+  # DICDIR <- "dic"
   IPADIC <- "mecab-ipadic"
 
   # J-LIWC dictionary file format (default)
   LIWCFORMAT <- "LIWC2015"
+  LIWCDIC <- c(LIWC2015 = "Japanese_Dictionary.dic", LIWC22 = "LIWC2015 Dictionary - Japanese.dicx")
 
   # User dictionary file
   USERDIC <- "user_dict.dic"
@@ -44,6 +45,7 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   jliwc_dictfile <- NULL
 
   jliwc_format <- LIWCFORMAT
+  jliwc_dic_filename <- LIWCDIC
 
   # IPADIC (directory)
   jliwc_IPADIC_dir <- IPADIC
@@ -64,6 +66,7 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   op.jliwc <- list(
     jliwc_project_home = jliwc_project_home,
     jliwc_dictfile = jliwc_dictfile,
+    jliwc_dic_filename = jliwc_dic_filename,
     jliwc_IPADIC_dir = jliwc_IPADIC_dir,
     jliwc_IPADIC = jliwc_IPADIC,
     jliwc_USERDIC = jliwc_USERDIC,

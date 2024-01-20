@@ -1,6 +1,6 @@
-load_ipadic()
-load_userdic()
-setup_jliwcdic()
+check_ipadic()
+check_userdic()
+load_jliwcdic()
 
 test <- function() {
   gibasa::ginga[1:10] |>

@@ -61,25 +61,25 @@ To analyze Japanese text data in **jliwc**, you need to set up three
 dictionaries: (1) IPAdic, (2) user dictionary, and (3) J-LIWC2015
 dictionary. If this is the first run, the IPAdic and user dictionary
 files are automatically downloaded and installed by using the
-`setup_ipadic()` and `setup_userdic()` functions, respectively.
+`install_ipadic()` and `install_userdic()` functions, respectively.
 
 Then you can set up the J-LIWC2015 dictionary file by using the
-`setup_jliwcdic()` function. If you use R GUI or RStudio, you can select
-the dictionary file by a file chooser dialog. If you use R console, you
-can select the dictionary file by typing the file path.
+`install_jliwcdic()` function. If you use R GUI or RStudio, you can
+select the dictionary file by a file chooser dialog. If you use R
+console, you can select the dictionary file by typing the file path.
 
 ``` r
 library(jliwc)
 
 # Set up IPAdic
-setup_ipadic()
+install_ipadic()
 
 # Set up the user dictionary
-setup_userdic()
+install_userdic()
 
 # Set up the J-LIWC2015 dictionary
-# If using the LIWC2015 format, specify format = "LIWC2015"
-setup_jliwcdic(format = "LIWC22")
+# You will choose the dictionary file by a file chooser dialog
+install_jliwcdic()
 ```
 
 By default, all dictionaries are installed at `J-LIWC2015` directory
@@ -98,31 +98,38 @@ numeric) characters with no spaces (e.g., `C:/JLIWC`).
 # Set a dictionary path
 options("jliwc_project_home" = "C:/JLIWC")
 
-setup_ipadic()
-setup_userdic()
-setup_jliwcdic(format = "LIWC22")
+install_ipadic()
+install_userdic()
+install_jliwcdic()
 ```
 
 The dictionary file installation needs to be done only once. Next time
-you call the `setup_` functions, the dictionaries are loaded from the
-installed files.
+you can just call the `load_jliwcdic()` function.
 
 ## Usage
 
 ### Analyze a column in a data frame
 
-After you set up and load the dictionaries, you can use the
-`liwc_analysis()` function to analyze Japanese texts. The function
-preprocesses the texts (including word segmentation by IPAdic) and
-returns a data frame with the LIWC category scores for each text.
+After installing the dictionary files, you can use the `liwc_analysis()`
+function to analyze Japanese texts. The function preprocesses the texts
+(including word segmentation by IPAdic) and returns a data frame with
+the LIWC category scores for each text. Don’t forget to call the
+`load_jliwcdic()` function before using the `liwc_analysis()` function.
+
+If you installed the dictionaries at a different directory from the
+default, set ‘options(“jliwc_project_home”)’ to specify the directory
+path before loading the dictionary.
 
 ``` r
-# Load dictionaries
-# if you installed the dictionaries at a different directory, specify the directory path
+# Load LIWC dictionary
+# If you installed the dictionaries at a different directory,
+# specify the directory path before loading the dictionary
 # options("jliwc_project_home" = "C:/JLIWC")
-setup_ipadic()
-setup_userdic()
-setup_jliwcdic(format = "LIWC22")
+load_jliwcdic()
+
+# If necessary, check if the IPAdic and user dictionary are installed
+# check_ipadic()
+# check_userdic()
 
 # Sample texts
 texts <- gibasa::ginga
@@ -178,10 +185,18 @@ returns a data frame that contains the text contents. You can directly
 pass the output of `read_text_files()` to `liwc_analysis()`.
 
 ``` r
-# Download and extract the NUCC data (Nagoya University Conversation Corpus)
+# Load LIWC dictionary
+load_jliwcdic()
+
+# Sample text files: Nagoya University Conversation Corpus
+# Reference: Fujimura, I., Chiba, S., & Ohso, M. (2012).
+# Lexical and grammatical features of spoken and written Japanese in contrast:
+# Exploring a lexical profiling approach to comparing spoken and written corpora.
+# In Proceedings of the VIIth GSCP International Conference. Speech and Corpora (pp. 393-398).
 temp_zip_file <- tempfile(fileext = ".zip")
 temp_dir <- tempdir()
 
+# Download and extract the data
 download.file(url = "https://mmsrv.ninjal.ac.jp/nucc/nucc.zip", dest = temp_zip_file, mode = "wb")
 unzip(zipfile = temp_zip_file, exdir = temp_dir)
 
@@ -211,24 +226,50 @@ files2 <- read_text_files(nucc_dir, filetype = "txt")
 #> Number of files read: 129
 #> Total bytes: 7843788
 
+# Of course, you can use `read_text_files()` to read your own text files in a directory
+# Change 'filetype' if necessary
+# file1 <- read_text_files("/path/to/directory/", filetype = "txt")
+
 # Analyze the text files
 # Note that no preprocessing is performed for demonstration purposes
 liwc_results_files <- files1 |> liwc_analysis()
+
 dplyr::tibble(liwc_results_files)
+#> # A tibble: 129 × 85
+#>    doc_id         WC   Dic `function` pronoun ppron      i     we
+#>    <chr>       <int> <dbl>      <dbl>   <dbl> <dbl>  <dbl>  <dbl>
+#>  1 data001.txt  8774  64.0       34.8    3.93 0.809 0.399  0.194 
+#>  2 data002.txt 14291  65.7       35.5    3.74 0.917 0.567  0.238 
+#>  3 data003.txt  7315  65.8       34.0    4.02 0.902 0.574  0.123 
+#>  4 data004.txt  8368  62.0       32.7    5.65 1.55  0.406  0.0478
+#>  5 data005.txt 13223  59.6       32.2    4.30 1.31  0.159  0.0908
+#>  6 data006.txt 11948  59.7       33.6    4.36 1.19  0.737  0.0251
+#>  7 data007.txt  8550  63.5       36.5    4.62 0.795 0.0351 0.0234
+#>  8 data008.txt 19817  68.3       38.2    5.63 1.18  0.636  0.0908
+#>  9 data009.txt 19010  67.4       37.1    5.52 1.38  0.0789 0.0473
+#> 10 data010.txt 10542  64.5       33.3    4.23 1.07  0.0664 0.0854
+#> # ℹ 119 more rows
+#> # ℹ 77 more variables: you <dbl>, shehe <dbl>, they <dbl>,
+#> #   ipron <dbl>, casepart <dbl>, auxverb <dbl>, adverb <dbl>,
+#> #   conj <dbl>, negate <dbl>, verb <dbl>, interrog <dbl>,
+#> #   number <dbl>, quant <dbl>, adjverb <dbl>, preadj <dbl>,
+#> #   affect <dbl>, posemo <dbl>, negemo <dbl>, anx <dbl>,
+#> #   anger <dbl>, sad <dbl>, social <dbl>, family <dbl>, …
+#> # ℹ Use `print(n = ...)` to see more rows
 ```
 
-Practically, before analyzing texts using LIWC, it is crucial to
-preprocess the texts to ensure accurate and meaningful results. This
-preprocessing typically involves cleaning the text data by removing
-elements that are irrelevant to the analysis. For instance, this can
-include stripping away HTML tags, which are common in web-sourced texts
-but irrelevant to linguistic analysis. Additionally, one should remove
-information such as metadata, non-lexical items, or any kind of coding
-that does not contribute to the natural linguistic content. This
-preprocessing step is vital because LIWC analyzes text based on word
-frequencies and categories, and non-lexical items or irrelevant tags can
-distort these frequencies, leading to skewed or inaccurate
-interpretations of the data.
+Practically, it is crucial to preprocess texts to ensure accurate and
+meaningful results. This preprocessing typically involves cleaning the
+text data by removing elements that are irrelevant to the analysis. For
+instance, this can include stripping away HTML tags, which are common in
+web-sourced texts but irrelevant to linguistic analysis. Additionally,
+one should remove information such as metadata, non-lexical items, or
+any kind of coding that does not contribute to the natural linguistic
+content. This preprocessing step is vital because a standard
+dictionary-based approach analyzes texts based on word frequencies and
+categories, and non-lexical items or irrelevant tags can distort these
+frequencies, leading to skewed or inaccurate interpretations of the
+data.
 
 ## Notes
 
