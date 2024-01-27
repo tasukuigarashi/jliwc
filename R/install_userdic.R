@@ -27,43 +27,34 @@ install_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "u
       {
         USERDIC <- file.path(dir, user_dic)
 
-        if (!file.exists(USERDIC)) {
-          cat("J-LIWC2015 user dictionary is not installed at", dir, "\n")
-          cat("Do you want to download the user dictionary file from GitHub and install?\n")
-          cat("1. Yes (Enter)\n")
-          cat("2. No (set the path to the user dictionary file manually) \n")
-          cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
-          download <- readline()
+        if (check_userdic(dir, silent = TRUE)) {
+          cat("J-LIWC2015 user dictionary is already installed at ", USERDIC, ".\n\n", sep = "")
+        } else {
+          cat("J-LIWC2015 user dictionary is not installed at ", USERDIC, ".\n\n", sep = "")
+        }
 
-          while (!download %in% 1:2 & download != "") {
-            cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
-            download <- readline()
-          }
+        download <- readline("Do you install the user dictionary? [Y/N] ")
 
-          if (download == 1 | download == "") {
-            # make a directory "dic" in the home directory
-            if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
-            # download the user dictionary file from GitHub
-            download.file(userdic_url,
-              destfile = USERDIC, mode = "wb"
-            )
-            cat("The user dictionary file was downloaded from GitHub.\n")
-          } else {
-            cat("Please choose the user dictionary file '", user_dic, "' (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n\n", sep = "")
-            USERDIC <- file.choose()
+        while (!download %in% c("Y", "N", "y", "n")) {
+          download <- readline("Do you install the user dictionary? [Y/N] ")
+        }
 
-            if (basename(USERDIC) != user_dic) {
-              stop("The filename should be `", user_dic, "`.\n")
-            }
-          }
-        } else if (file.info(USERDIC)$size == 0) {
-          message("J-LIWC2015 user dictionary file is found at ", dir, " but the file size is 0.\n")
+        if (download %in% c("Y", "y")) {
+          # make a directory "dic" in the home directory
+          if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+          # download the user dictionary file from GitHub
+          download.file(userdic_url,
+            destfile = USERDIC, mode = "wb"
+          )
+          cat("The user dictionary file was downloaded from GitHub.\n")
+        }
+
+        if (file.info(USERDIC)$size == 0) {
+          message("The user dictionary file is found at ", dir, " but the file size is 0.\n")
         }
 
         # check if the user dictionary file is properly installed
-        dictionary_info2(sys_dic = getOption("jliwc_IPADIC"), user_dic = USERDIC)
-        # Success
-        if (!silent) message("User dictionary is installed at ", USERDIC, "\n")
+        check_userdic(dir, user_dic)
         # Set USERDIC as the path to the dictionary
         options(jliwc_USERDIC = USERDIC)
         return(TRUE)

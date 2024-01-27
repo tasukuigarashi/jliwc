@@ -18,8 +18,8 @@
 #' @export
 #'
 install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
-                           format = getOption("jliwc_format", default = "LIWC2015"),
-                           silent = FALSE) {
+                             format = getOption("jliwc_format", default = "LIWC2015"),
+                             silent = FALSE) {
   # set the temporary directory to avoid errors to install IPADIC
   # to the path including full-byte characters
   temp_dir <- tempdir()
@@ -42,7 +42,9 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
 
           # Copy the dictionary file to the home directory
           cat("The LIWC dictionary file '", paste0(dic_format, collapse = "', '"),
-              "' was not found at ", dir, "\n\n", sep = "")
+            "' was not found at ", dir, "\n\n",
+            sep = ""
+          )
           cat("You have two options:\n\n")
           # choose 1 or 2
           cat("1. Install the dictionary file at ", dir, " (for later use) and load it (default)\n", sep = "")
@@ -103,4 +105,3 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
   })
   invisible(check)
 }
-

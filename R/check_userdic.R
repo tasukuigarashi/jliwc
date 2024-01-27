@@ -21,18 +21,18 @@ check_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "use
       # check if the user dictionary file is properly installed
       dictionary_info2(sys_dic = getOption("jliwc_IPADIC"), user_dic = USERDIC)
       # Success
-      if (!silent) message("User dictionary is installed at ", USERDIC, "\n")
+      if (!silent) message("User dictionary is installed at ", USERDIC)
       return(TRUE)
     },
     warning = function(w) {
       # This warning is probably because of the broken file
-      message(w)
-      message("\nUser dictionary is not properly installed (the file might be broken). Check the directory at ", USERDIC, "\n")
+      if (!silent) message(w)
+      if (!silent) message("\nUser dictionary is not properly installed (the file might be broken). Check the directory at ", USERDIC)
       return(FALSE)
     },
     error = function(e) {
-      message(e)
-      message("\nUser dictionary is not properly installed. Check the directory at ", USERDIC, "\n")
+      if (!silent) message(e)
+      if (!silent) message("\nUser dictionary is not properly installed. Check the directory at ", USERDIC)
       return(FALSE)
     }
   )

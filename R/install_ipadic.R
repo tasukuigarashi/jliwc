@@ -34,48 +34,45 @@ install_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictnam
       {
         IPADIC <- file.path(dir, ipadic_dictname)
 
-        if (!file.exists(file.path(IPADIC, "dicrc"))) {
-          cat("IPADIC is not installed at", IPADIC, "\n")
-          cat("You have two options: \n\n")
-          cat("1. Install IPADIC (Enter)\n")
-          # create cat for installing IPADIC at the directory other than the home directory
-          cat("2. Set the path to the installed IPADIC manually\n")
-          cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
-          install <- readline()
+        if (check_ipadic(dir, silent = TRUE)) {
+          cat("IPAdic is already installed at ", IPADIC, ".\n\n", sep = "")
+        } else {
+          cat("IPAdic is not installed at ", IPADIC, ".\n\n", sep = "")
+        }
 
-          while (!install %in% 1:2 & install != "") {
-            cat("Please type 1 or 2 (ESC or CTRL+C to quit): ")
-            install <- readline()
-          }
+        install <- readline("Do you install IPAdic? [Y/N] ")
 
-          # install IPADIC at the home directory
-          if (install == 1 | install == "") {
-            # make a directory "mecab-ipadic" in the home directory
-            if (!dir.exists(IPADIC)) dir.create(IPADIC, recursive = TRUE)
-            # Download IPADIC
-            ipadic_tar <- file.path(tempdir(), paste0(tar_dic, ".tar.gz"))
-            download.file(ipadic_url, destfile = ipadic_tar, mode = "wb")
+        while (!install %in% c("Y", "N", "y", "n")) {
+          install <- readline("Do you install IPAdic? [Y/N] ")
+        }
 
-            system(paste0("tar -xf ", ipadic_tar, " -C ", tempdir()))
+        # install IPADIC at the home directory
+        if (install %in% c("Y", "y")) {
+          # make a directory "mecab-ipadic" in the home directory
+          if (!dir.exists(IPADIC)) dir.create(IPADIC, recursive = TRUE)
+          # Download IPADIC
+          ipadic_tar <- file.path(tempdir(), paste0(tar_dic, ".tar.gz"))
+          download.file(ipadic_url, destfile = ipadic_tar, mode = "wb")
 
-            # Compile IPADIC
-            gibasa::build_sys_dic(
-              dic_dir = file.path(tempdir(), tar_dic),
-              out_dir = IPADIC,
-              encoding = "euc-jp" # encoding of source csv files
-            )
+          system(paste0("tar -xf ", ipadic_tar, " -C ", tempdir()))
 
-            # copy the 'dicrc' file
-            file.copy(file.path(tempdir(), tar_dic, "dicrc"), IPADIC)
+          # Compile IPADIC
+          gibasa::build_sys_dic(
+            dic_dir = file.path(tempdir(), tar_dic),
+            out_dir = IPADIC,
+            encoding = "euc-jp" # encoding of source csv files
+          )
 
-            # remove the tar file
-            file.remove(ipadic_tar)
-            # remove temporary directory
-            unlink(tar_dic, recursive = TRUE)
-          } else {
-            cat("Please choose the dictionary file of IPADIC (sys.dic).\n")
-            IPADIC <- file.choose() |> dirname()
-          }
+          # copy the 'dicrc' file
+          file.copy(file.path(tempdir(), tar_dic, "dicrc"), IPADIC)
+
+          # remove the tar file
+          file.remove(ipadic_tar)
+          # remove temporary directory
+          unlink(tar_dic, recursive = TRUE)
+        } else {
+          message("IPADic is not installed.")
+          return(TRUE)
         }
 
         # check if IPADIC is properly installed
@@ -88,12 +85,18 @@ install_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictnam
       },
       warning = function(w) {
         message(w)
-        message("\nIPADIC is not properly installed. Check the directory ", IPADIC, " and try installing again.\n")
+        message(
+          "\nIPADIC is not properly installed. Check the directory ",
+          IPADIC, " and try installing again.\n"
+        )
         return(FALSE)
       },
       error = function(e) {
         message(e)
-        message("\nIPADIC is not properly installed. Check the directory ", IPADIC, " and try installing again.\n")
+        message(
+          "\nIPADIC is not properly installed. Check the directory ",
+          IPADIC, " and try installing again.\n"
+        )
         return(FALSE)
       }
     )

@@ -48,11 +48,11 @@ load_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         isdic <- file.exists(dic)
 
         if (any(isdir, na.rm = TRUE) | !any(isdic)) {
-          message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
+          if (!silent) message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
           stop()
         } else {
-          dic_file <- basename(dic[isdic])
-          dictliwc <- read_dict(dic[isdic], format = names(dic_format)[isdic])
+          dic_file <- basename(dic[isdic][1])
+          dictliwc <- read_dict(dic[isdic][1], format = names(dic_format)[isdic][1])
         }
 
         if (!silent) message("The LIWC dictionary file '", dic_file, "' was successfully loaded from ", dir, "\n")
@@ -61,11 +61,11 @@ load_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         return(TRUE)
       },
       warning = function(w) {
-        message(w)
+        if (!silent) message(w)
         return(FALSE)
       },
       error = function(e) {
-        message(e)
+        if (!silent) message(e)
         return(FALSE)
       }
     )
