@@ -8,7 +8,7 @@ Description: This package provides functions to analyze Japanese text using J-LI
     The J-LIWC2015 dictionary is developed by Igarashi, Okuda, and Sasahara (2022) <https://doi.org/10.3389/fpsyg.2022.841534>. The dictionary file is available at <https://www.liwc.app/dictionaries> (LIWC-22) and <https://www.liwc.net/dictionaries> (LIWC2015) for academic and university license users (non-commercial use only).
 Depends:
     R (>= 4.2.0)
-License: GPL (>= 3) + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
