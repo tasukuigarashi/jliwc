@@ -20,9 +20,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' setup_ipadic()
-#' setup_userdic()
-#' setup_jliwcdic()
+#' # Load dictionaries
+#' load_dictionaries()
 #'
 #' # Sample Japanese texts from Night on the Galactic Railroad (Kenji Miyazawa)
 #' x <- gibasa::ginga[1:10]
@@ -75,7 +74,8 @@ liwc_analysis <- function(input, text_field = "text",
 
   # Stop if dictionary is not a dictionary2 class object
   if (!inherits(dict, "dictionary2")) {
-    stop("The dictionary must be a quanteda dictionary2 class object. Please check if you have run 'setup_jliwcdic()' to load the dictionary.")
+    stop("The dictionary must be a quanteda dictionary2 class object.
+         Please check if you have run 'load_dictionaries()' to load the dictionary.")
   }
 
   # Stop if text_field is not in input

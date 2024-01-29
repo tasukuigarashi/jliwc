@@ -1,6 +1,4 @@
-check_ipadic()
-check_userdic()
-load_jliwcdic()
+load_dictionaries()
 
 test <- function() {
   gibasa::ginga[1:10] |>

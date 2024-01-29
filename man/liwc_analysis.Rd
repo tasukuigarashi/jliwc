@@ -37,9 +37,8 @@ LIWC-style analysis of Japanese text data
 }
 \examples{
 \dontrun{
-setup_ipadic()
-setup_userdic()
-setup_jliwcdic()
+# Load dictionaries
+load_dictionaries()
 
 # Sample Japanese texts from Night on the Galactic Railroad (Kenji Miyazawa)
 x <- gibasa::ginga[1:10]

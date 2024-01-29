@@ -8,7 +8,7 @@ load_jliwcdic(dir = getOption("jliwc_project_home"), silent = FALSE)
 }
 \arguments{
 \item{dir}{The directory from which to load the J-LIWC dictionary file.
-Defaults to the value set in the 'jliwc_project_home' option.
+Defaults to the value set in the \code{jliwc_project_home} option.
 Note that it is not a path to a dictionary file, but a path to a
 directory that contains the dictionary file.}
 

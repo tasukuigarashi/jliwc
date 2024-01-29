@@ -90,13 +90,13 @@ fail to install the dictionaries if there are non-ASCII characters or
 spaces in the home directory path (e.g., `C:/Users/山田　太郎` or
 `C:/Users/username/OneDrive/ドキュメント`). If you want to install the
 dictionaries at a different directory, you can specify the directory
-path by the `options("jliwc_project_home")`. It is strongly recommended
+path by the `options(jliwc_project_home)`. It is strongly recommended
 that the dictionary path is named with ASCII (one-byte alphabetical or
 numeric) characters with no spaces (e.g., `C:/JLIWC`).
 
 ``` r
 # Set a dictionary path
-options("jliwc_project_home" = "C:/JLIWC")
+options(jliwc_project_home = "C:/JLIWC")
 
 install_ipadic()
 install_userdic()
@@ -104,7 +104,7 @@ install_jliwcdic()
 ```
 
 The dictionary file installation needs to be done only once. Next time
-you can just call the `load_jliwcdic()` function.
+you can just call the `load_dictionaries()` function.
 
 ## Usage
 
@@ -114,22 +114,19 @@ After installing the dictionary files, you can use the `liwc_analysis()`
 function to analyze Japanese texts. The function preprocesses the texts
 (including word segmentation by IPAdic) and returns a data frame with
 the LIWC category scores for each text. Don’t forget to call the
-`load_jliwcdic()` function before using the `liwc_analysis()` function.
+`load_dictionaries()` function before using the `liwc_analysis()`
+function.
 
 If you installed the dictionaries at a different directory from the
-default, set ‘options(“jliwc_project_home”)’ to specify the directory
-path before loading the dictionary.
+default, set `options(jliwc_project_home = "path/to/directory")` to
+specify the directory path before loading the dictionary.
 
 ``` r
 # Load LIWC dictionary
 # If you installed the dictionaries at a different directory,
 # specify the directory path before loading the dictionary
-# options("jliwc_project_home" = "C:/JLIWC")
-load_jliwcdic()
-
-# If necessary, check if the IPAdic and user dictionary are installed
-# check_ipadic()
-# check_userdic()
+# options(jliwc_project_home = "C:/JLIWC")
+load_dictionaries()
 
 # Sample texts
 texts <- gibasa::ginga
@@ -186,7 +183,7 @@ pass the output of `read_text_files()` to `liwc_analysis()`.
 
 ``` r
 # Load LIWC dictionary
-load_jliwcdic()
+load_dictionaries()
 
 # Sample text files: Nagoya University Conversation Corpus
 # Reference: Fujimura, I., Chiba, S., & Ohso, M. (2012).
@@ -257,19 +254,6 @@ dplyr::tibble(liwc_results_files)
 #> #   anger <dbl>, sad <dbl>, social <dbl>, family <dbl>, …
 #> # ℹ Use `print(n = ...)` to see more rows
 ```
-
-Practically, it is crucial to preprocess texts to ensure accurate and
-meaningful results. This preprocessing typically involves cleaning the
-text data by removing elements that are irrelevant to the analysis. For
-instance, this can include stripping away HTML tags, which are common in
-web-sourced texts but irrelevant to linguistic analysis. Additionally,
-one should remove information such as metadata, non-lexical items, or
-any kind of coding that does not contribute to the natural linguistic
-content. This preprocessing step is vital because a standard
-dictionary-based approach analyzes texts based on word frequencies and
-categories, and non-lexical items or irrelevant tags can distort these
-frequencies, leading to skewed or inaccurate interpretations of the
-data.
 
 ## Notes
 

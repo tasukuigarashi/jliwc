@@ -5,7 +5,7 @@
 #' in a path that includes full-byte characters.
 #'
 #' @param dir The directory from which to load the J-LIWC dictionary file.
-#'   Defaults to the value set in the 'jliwc_project_home' option.
+#'   Defaults to the value set in the `jliwc_project_home` option.
 #'   Note that it is not a path to a dictionary file, but a path to a
 #'   directory that contains the dictionary file.
 #' @param silent Logical; if `FALSE`, prints messages to the console about the
@@ -48,8 +48,7 @@ load_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         isdic <- file.exists(dic)
 
         if (any(isdir, na.rm = TRUE) | !any(isdic)) {
-          if (!silent) message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
-          stop()
+          if (!silent) stop("The LIWC dictionary file is not properly installed/loaded.")
         } else {
           dic_file <- basename(dic[isdic][1])
           dictliwc <- read_dict(dic[isdic][1], format = names(dic_format)[isdic][1])
