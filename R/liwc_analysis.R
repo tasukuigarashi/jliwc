@@ -88,6 +88,11 @@ liwc_analysis <- function(input, text_field = "text",
     stop("The column '", docid_field, "' (identifier) must be included in the data frame.")
   }
 
+  # Stop if docid_field contains duplicated values
+  if (any(duplicated(input[[docid_field]]))) {
+    stop("The column '", docid_field, "' (identifier) must contain unique values.")
+  }
+
   text_df <- input |>
     dplyr::mutate(!!text_field := preprocess(.data[[text_field]])) |>
     # mutate(text = preprocess(text)) |>
