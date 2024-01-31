@@ -9,7 +9,7 @@
 #' @param user_dic A path to a MeCab user dictionary
 #'
 #' @importFrom rlang := .data
-#' @importFrom dplyr %>% mutate select pull group_by summarise
+#' @importFrom dplyr mutate select pull group_by summarise
 #' @importFrom dplyr ungroup bind_rows count relocate n
 #' @importFrom tidyr pivot_wider
 #' @importFrom stringr str_remove_all str_split
@@ -23,7 +23,7 @@
 #' # Load dictionaries
 #' load_dictionaries()
 #'
-#' # Sample Japanese texts from Night on the Galactic Railroad (Kenji Miyazawa)
+#' # Sample Japanese texts from 'Night on the Galactic Railroad' (Kenji Miyazawa)
 #' x <- gibasa::ginga[1:10]
 #' x
 #'
@@ -95,9 +95,9 @@ liwc_analysis <- function(input, text_field = "text",
 
   text_df <- input |>
     dplyr::mutate(!!text_field := preprocess(.data[[text_field]])) |>
-    # mutate(text = preprocess(text)) |>
-    count_mecab(text_field = text_field, sys_dic = sys_dic, user_dic = user_dic, liwclike = TRUE) |>
-    gibasa::prettify(col_select = c("token", "POS1"))
+    tokenize_mecab(text_field = text_field, sys_dic = sys_dic, user_dic = user_dic, liwclike = TRUE) |>
+      # dplyr::select(doc_id, sentence_id, token_id, token, POS1)
+      dplyr::select(.data[["doc_id"]], .data[["token"]], .data[["POS1"]])
 
   # Calculate word count
   WC <- text_df |>
@@ -105,28 +105,29 @@ liwc_analysis <- function(input, text_field = "text",
     dplyr::summarise(WC = n()) |>
     dplyr::pull(WC)
 
-  dict_count <- text_df %>%
-    dplyr::group_by(.data[[docid_field]]) %>%
-    dplyr::select(.data[[docid_field]], .data[["token"]]) %>%
-    dplyr::summarise(token = list(.data[["token"]])) %>%
-    dplyr::select(.data[["token"]]) %>%
-    dplyr::pull() %>%
-    quanteda::as.tokens() %>%
-    quanteda::dfm() %>%
+  dict_count <- text_df |>
+    dplyr::group_by(.data[[docid_field]]) |>
+    dplyr::select(.data[[docid_field]], .data[["token"]]) |>
+    dplyr::summarise(token = list(.data[["token"]])) |>
+    dplyr::select(.data[["token"]]) |>
+    dplyr::pull() |>
+    quanteda::as.tokens() |>
+    quanteda::dfm() |>
     quanteda::dfm_lookup(dictionary = dict, nomatch = "nomatch")
 
   dict_proportion <- (dict_count / WC) * 100
 
-  dfr <- data.frame(WC = WC) %>%
-    dplyr::bind_cols(dict_proportion %>% quanteda::convert(to = "data.frame")) %>%
+  dfr <- data.frame(WC = WC) |>
+    dplyr::bind_cols(dict_proportion |> quanteda::convert(to = "data.frame")) |>
     dplyr::mutate(
       Dic = 100 - .data[["nomatch"]]
-    ) %>% # % of dictionary words
+    ) |>
+    # % of dictionary words
     dplyr::select(-.data[["nomatch"]])
 
   # doc_id in the original data
   dfr[[docid_field]] <- input[[docid_field]]
-  dfr <- dfr %>%
+  dfr <- dfr |>
     dplyr::relocate(.data[[docid_field]], WC, .data[["Dic"]])
 
   # Translate category names into Japanese
@@ -139,20 +140,24 @@ liwc_analysis <- function(input, text_field = "text",
     # Add MeCab categories
     MECAB_LOOKUP <- jliwc_env$MECAB_LOOKUP
 
-    text_pos <- text_df %>%
-      dplyr::group_by(.data[[docid_field]]) %>%
-      dplyr::count(.data[["POS1"]]) %>%
-      dplyr::mutate(total = sum(n)) %>%
-      dplyr::mutate(text_pos = (n / .data[["total"]]) * 100) %>%
-      dplyr::select(-n, -.data[["total"]]) %>%
+    text_pos <- text_df |>
+      dplyr::group_by(.data[[docid_field]]) |>
+      dplyr::count(.data[["POS1"]]) |>
+      dplyr::mutate(total = sum(n)) |>
+      dplyr::mutate(text_pos = (n / .data[["total"]]) * 100) |>
+      dplyr::select(-n, -.data[["total"]]) |>
       dplyr::ungroup()
 
     wide_text_pos <- text_pos |>
-      tidyr::pivot_wider(
-        names_from = .data[["POS1"]],
-        values_from = text_pos,
-        values_fill = list(text_pos = 0)
-      )
+     tidyr::pivot_wider(
+       names_from = .data[["POS1"]],
+       values_from = text_pos,
+       values_fill = list(text_pos = 0)
+     )
+
+    # slower
+    # wide_text_pos <- reshape(text_pos, idvar = "doc_id", timevar = "POS1", direction = "wide")
+    # wide_text_pos[is.na(wide_text_pos)] <- 0
 
     # Insert MeCab columns if missing
     missing_cols <- base::setdiff(names(MECAB_LOOKUP), names(wide_text_pos))

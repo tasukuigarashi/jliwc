@@ -33,17 +33,14 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   # User dictionary file
   USERDIC <- "user_dict.dic"
 
+  # project home directory
   jliwc_project_home <- normalizePath(file.path(HOME, SUB),
     winslash = "/", mustWork = FALSE)
 
-  # directory for LIWC dictionary
-  # jliwc_dic_home <- normalizePath(file.path(jliwc_project_home, DICDIR, LIWC2015),
-  #   winslash = "/", mustWork = FALSE
-  # )
-
-  # J-LIWC dictionary2 object (set by setup_jliwcdic())
+  # J-LIWC dictionary2 object
   jliwc_dictfile <- NULL
 
+  # dictionary filenames
   jliwc_format <- LIWCFORMAT
   jliwc_dic_filename <- LIWCDIC
 

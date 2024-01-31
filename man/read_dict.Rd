@@ -20,9 +20,7 @@ Read the LIWC dictionary
 \examples{
 \dontrun{
 # Set up dictionaries
-setup_ipadic()
-setup_userdic()
-setup_jliwcdic() # choose a dictionary file from a local directory
+load_dictionaries()
 
 # Read the dictionary (LIWC2015 format)
 dictliwc <- read_dict(file.path(getOption("jliwc_project_home"), "Japanese_Dictionary.dic"))

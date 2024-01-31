@@ -40,7 +40,7 @@ LIWC-style analysis of Japanese text data
 # Load dictionaries
 load_dictionaries()
 
-# Sample Japanese texts from Night on the Galactic Railroad (Kenji Miyazawa)
+# Sample Japanese texts from 'Night on the Galactic Railroad' (Kenji Miyazawa)
 x <- gibasa::ginga[1:10]
 x
 
