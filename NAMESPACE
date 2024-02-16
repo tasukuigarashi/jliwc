@@ -2,6 +2,7 @@
 
 export(check_ipadic)
 export(check_userdic)
+export(install_dictionaries)
 export(install_ipadic)
 export(install_jliwcdic)
 export(install_userdic)

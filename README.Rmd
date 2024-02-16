@@ -54,6 +54,7 @@ Then you can set up the J-LIWC2015 dictionary file by using the `install_jliwcdi
 ``` r
 library(jliwc)
 
+# Do only once
 # Set up IPAdic
 install_ipadic()
 
@@ -65,24 +66,25 @@ install_userdic()
 install_jliwcdic()
 ```
 
-By default, all dictionaries are installed at `J-LIWC2015` directory under your home directory (e.g., `C:/Users/username/Documents/J-LIWC2015` or `C:/Users/username/OneDrive/Documents` on Windows). However, you may fail to install the dictionaries if there are non-ASCII characters or spaces in the home directory path (e.g., `C:/Users/山田　太郎` or `C:/Users/username/OneDrive/ドキュメント`). If you want to install the dictionaries at a different directory, you can specify the directory path by the `options(jliwc_project_home)`. It is strongly recommended that the dictionary path is named with ASCII (one-byte alphabetical or numeric) characters with no spaces (e.g., `C:/JLIWC`).
+By default, all dictionaries are installed under a hidden local application directory (e.g., `C:/Users/username/AppData/local/jliwc` on Windows, `~/Library/Application Support/jliwc` on Mac, and `~/.local/share/jliwc` on Linux). In most cases, this is reasonable to secure the access to the files across different operating systems. However, you may fail to install the dictionaries on Windows if your username includes non-ASCII characters or spaces (e.g., `C:/Users/山田　太郎`). If you want to install the dictionaries at a different directory, you can specify the directory path by the `options(jliwc_project_home)`. It is strongly recommended that the dictionary path is named with ASCII (one-byte alphabetical or numeric) characters with no spaces (e.g., `C:/JLIWC`).
 
 ``` r
 # Set a dictionary path
 options(jliwc_project_home = "C:/JLIWC")
 
+# Do only once
 install_ipadic()
 install_userdic()
 install_jliwcdic()
 ```
 
-The dictionary file installation needs to be done only once. Next time you can just call the `load_dictionaries()` function.
+The dictionary file installation needs to be done only once. Next time you can just use the `load_dictionaries()` function to load the dictionaries.
 
 ## Usage
 
 ### Analyze a column in a data frame
 
-After installing the dictionary files, you can use the `liwc_analysis()` function to analyze Japanese texts. The function preprocesses the texts (including word segmentation by IPAdic) and returns a data frame with the LIWC category scores for each text. Don't forget to call the `load_dictionaries()` function before using the `liwc_analysis()` function.
+After installing and loading the dictionary files, you can use the `liwc_analysis()` function to analyze Japanese texts. The function preprocesses the texts (including word segmentation by IPAdic) and returns a data frame with the LIWC category scores for each text. Don't forget to call the `load_dictionaries()` function before using the `liwc_analysis()` function.
 
 If you installed the dictionaries at a different directory from the default, set `options(jliwc_project_home = "path/to/directory")` to specify the directory path before loading the dictionary.
 
@@ -91,6 +93,8 @@ If you installed the dictionaries at a different directory from the default, set
 # If you installed the dictionaries at a different directory,
 # specify the directory path before loading the dictionary
 # options(jliwc_project_home = "C:/JLIWC")
+library(jliwc)
+
 load_dictionaries()
 
 # Sample texts

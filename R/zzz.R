@@ -21,7 +21,8 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
 # Set up parameters
 .onLoad <- function(libname, pkgname) {
   # Directory of the project
-  HOME <- path.expand("~") # Windows ("C:/Users/username/Documents")
+  # HOME <- path.expand("~") # Windows ("C:/Users/username/Documents")
+  HOME <- rappdirs::user_data_dir("jliwc", appauthor = NULL)
   SUB <- "J-LIWC2015"
   # DICDIR <- "dic"
   IPADIC <- "mecab-ipadic"
@@ -64,8 +65,10 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
     jliwc_project_home = jliwc_project_home,
     jliwc_dictfile = jliwc_dictfile,
     jliwc_dic_filename = jliwc_dic_filename,
+    jliwc_IPADIC_name = IPADIC,
     jliwc_IPADIC_dir = jliwc_IPADIC_dir,
     jliwc_IPADIC = jliwc_IPADIC,
+    jliwc_USERDIC_name = USERDIC,
     jliwc_USERDIC = jliwc_USERDIC,
     jliwc_IPADIC_url = jliwc_IPADIC_url,
     jliwc_USERDIC_url = jliwc_USERDIC_url

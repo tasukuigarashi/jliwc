@@ -17,9 +17,11 @@
 #'
 #' @export
 #'
-install_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "user_dict.dic",
-                            userdic_url = getOption("jliwc_USERDIC_url"), silent = FALSE) {
-  # set the temporary directory to avoid errors to install IPADIC
+install_userdic <- function(dir = getOption("jliwc_project_home"),
+                            user_dic = getOption("jliwc_USERDIC_name"),
+                            userdic_url = getOption("jliwc_USERDIC_url"),
+                            silent = FALSE) {
+  # set the temporary directory to avoid errors to install the dictionary
   # to the path including full-byte characters
   temp_dir <- tempdir()
   withr::with_dir(temp_dir, {

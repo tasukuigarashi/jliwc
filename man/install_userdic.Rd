@@ -6,7 +6,7 @@
 \usage{
 install_userdic(
   dir = getOption("jliwc_project_home"),
-  user_dic = "user_dict.dic",
+  user_dic = getOption("jliwc_USERDIC_name"),
   userdic_url = getOption("jliwc_USERDIC_url"),
   silent = FALSE
 )
