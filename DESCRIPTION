@@ -1,6 +1,6 @@
 Package: jliwc
 Title: jliwc: A Japanese text analyzer for J-LIWC dictionary
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: 
     person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9432-4425"))
@@ -14,8 +14,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Imports:
     rlang,
-    rappdirs,
+    tools,
     dplyr,
+    jsonlite,
     tidyr,
     stringr,
     stringi,

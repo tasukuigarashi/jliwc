@@ -48,6 +48,9 @@ install_userdic <- function(dir = getOption("jliwc_project_home"),
           download.file(userdic_url,
             destfile = USERDIC, mode = "wb"
           )
+          # save the file path to the configuration file
+          save_jliwc_config(USERDIC, "userdic")
+
           cat("The user dictionary file was downloaded from GitHub.\n")
         }
 
@@ -57,6 +60,7 @@ install_userdic <- function(dir = getOption("jliwc_project_home"),
 
         # check if the user dictionary file is properly installed
         check_userdic(dir, user_dic)
+
         # Set USERDIC as the path to the dictionary
         options(jliwc_USERDIC = USERDIC)
         return(TRUE)

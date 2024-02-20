@@ -51,10 +51,10 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
           # dictliwc <- read_dict(dic[isdic], format = names(dic_format)[isdic])
         }
 
-          cat("You have two options:\n\n")
+          cat("You have three options:\n\n")
           # choose 1 or 2
           cat("1. Install the dictionary file at ", dir, " (for later use) and load it (default)\n", sep = "")
-          cat("2. Only load the dictionary file (do not copy it)\n\n", sep = "")
+          cat("2. Only load the dictionary file (do not copy it)\n", sep = "")
           cat("3. Quit\n\n")
           cat("Please type 1, 2, or 3 (ESC or CTRL+C to quit): ")
           copy <- readline()
@@ -93,6 +93,9 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
             dic <- file.path(dir, basename(dic)) # Not necessary
             dic_file <- basename(dic)
           }
+
+        # save the dictionary path to the configuration file
+        save_jliwc_config(dic, "jliwcdic")
 
         if (!silent) message("The LIWC dictionary file '", dic_file, "' was successfully loaded from ", dir, "\n")
         options(jliwc_dictfile = dictliwc)

@@ -66,7 +66,7 @@ install_userdic()
 install_jliwcdic()
 ```
 
-By default, all dictionaries are installed under a hidden local application directory (e.g., `C:/Users/username/AppData/local/jliwc` on Windows, `~/Library/Application Support/jliwc` on Mac, and `~/.local/share/jliwc` on Linux). In most cases, this is reasonable to secure the access to the files across different operating systems. However, you may fail to install the dictionaries on Windows if your username includes non-ASCII characters or spaces (e.g., `C:/Users/山田　太郎`). If you want to install the dictionaries at a different directory, you can specify the directory path by the `options(jliwc_project_home)`. It is strongly recommended that the dictionary path is named with ASCII (one-byte alphabetical or numeric) characters with no spaces (e.g., `C:/JLIWC`).
+By default, all dictionaries are installed under a hidden local application directory (set by `tools::R_user_dir("jliwc", "data")`). In most cases, this is reasonable to secure the access to the files across different operating systems. However, you may fail to install the dictionaries on Windows if your username includes non-ASCII characters or spaces (e.g., `C:/Users/山田 太郎`). If you want to install the dictionaries at a different directory, you can specify the directory path by the `options(jliwc_project_home)`. It is strongly recommended that the dictionary path is named with ASCII (one-byte alphabetical or numeric) characters with no spaces (e.g., `C:/JLIWC`).
 
 ``` r
 # Set a dictionary path

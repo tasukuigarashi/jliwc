@@ -27,9 +27,7 @@
 #'
 #' @export
 #'
-load_jliwcdic <- function(dir = getOption("jliwc_project_home"),
-                          # format = getOption("jliwc_format", default = "LIWC2015"),
-                          silent = FALSE) {
+load_jliwcdic <- function(dir = getOption("jliwc_project_home"), silent = FALSE) {
   # set the temporary directory to avoid errors to install IPADIC
   # to the path including full-byte characters
   temp_dir <- tempdir()

@@ -21,7 +21,10 @@ install_ipadic(
 
 \item{tar_dic}{A name of the IPADIC tar file}
 
-\item{ipadic_url}{A URL of the IPADIC tar file}
+\item{ipadic_url}{A URL of the IPADIC tar file. Default on SourceForge.
+If you fail to download the file from the default URL,
+you can specify the URL of the tar file. For example, you can use the following URL:
+\url{https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz}}
 
 \item{silent}{Boolean. Whether to print messages}
 }

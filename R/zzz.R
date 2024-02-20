@@ -22,13 +22,14 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
 .onLoad <- function(libname, pkgname) {
   # Directory of the project
   # HOME <- path.expand("~") # Windows ("C:/Users/username/Documents")
-  HOME <- rappdirs::user_data_dir("jliwc", appauthor = NULL)
+  HOME <- tools::R_user_dir("jliwc", "data")
   SUB <- "J-LIWC2015"
-  # DICDIR <- "dic"
+
+  # IPAdic
   IPADIC <- "mecab-ipadic"
 
   # J-LIWC dictionary file format (default)
-  LIWCFORMAT <- "LIWC2015"
+  # LIWCFORMAT <- "LIWC2015"
   LIWCDIC <- c(LIWC2015 = "Japanese_Dictionary.dic", LIWC22 = "LIWC2015 Dictionary - Japanese.dicx")
 
   # User dictionary file
@@ -42,7 +43,7 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   jliwc_dictfile <- NULL
 
   # dictionary filenames
-  jliwc_format <- LIWCFORMAT
+  # jliwc_format <- LIWCFORMAT
   jliwc_dic_filename <- LIWCDIC
 
   # IPADIC (directory)
@@ -55,8 +56,8 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   jliwc_USERDIC <- normalizePath(file.path(jliwc_project_home, USERDIC),
     winslash = "/", mustWork = FALSE)
 
-  # IPADIC url: Alternative: "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
-  jliwc_IPADIC_url <- "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz"
+  # IPADIC url: Alternative: "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz"
+  jliwc_IPADIC_url <- "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
   jliwc_USERDIC_url <- "https://github.com/tasukuigarashi/j-liwc2015/raw/main/user_dict.dic"
 
   # Set options

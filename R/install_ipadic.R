@@ -5,7 +5,10 @@
 #' @param ipadic_dictname a name of the directory where IPADIC is installed
 #'   (e.g., "C:/Users/username/Documents/J-LIWC2015/mecab-ipadic")
 #' @param tar_dic A name of the IPADIC tar file
-#' @param ipadic_url A URL of the IPADIC tar file
+#' @param ipadic_url A URL of the IPADIC tar file. Default on SourceForge.
+#' If you fail to download the file from the default URL,
+#'  you can specify the URL of the tar file. For example, you can use the following URL:
+#'  <https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz>
 #' @param silent Boolean. Whether to print messages
 #'
 #' @importFrom utils download.file
@@ -77,6 +80,12 @@ install_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictnam
 
         # check if IPADIC is properly installed
         dictionary_info2(sys_dic = IPADIC)
+
+        # list files in the directory
+        files <- list.files(IPADIC, full.names = TRUE, recursive = TRUE)
+        # save to the configuration file
+        save_jliwc_config(files, "ipadic")
+
         # Success
         if (!silent) message("IPADIC is installed at ", IPADIC, "\n")
         # Set IPADIC as the path to the dictionary
@@ -87,16 +96,24 @@ install_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictnam
         message(w)
         message(
           "\nIPADIC is not properly installed. Check the directory ",
-          IPADIC, " and try installing again.\n"
+          IPADIC, " and try installing again.\n
+          If you can't remove the tar.gz file, restart R and then remove the file.\n"
         )
+        # save NULL to the configuration file
+        save_jliwc_config(NULL, "ipadic")
+
         return(FALSE)
       },
       error = function(e) {
         message(e)
         message(
           "\nIPADIC is not properly installed. Check the directory ",
-          IPADIC, " and try installing again.\n"
+          IPADIC, " and try installing again.\n
+          If you can't remove the tar.gz file, restart R and then remove the file.\n"
         )
+        # save NULL to the configuration file
+        save_jliwc_config(NULL, "ipadic")
+
         return(FALSE)
       }
     )
