@@ -1,37 +1,44 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # jliwc
 
 <!-- badges: start -->
 <!-- badges: end -->
-
 <!-- write a paragraph to introduce the package -->
-The **jliwc** package provides a simple R interface to use the Japanese version of LIWC2015 (J-LIWC2015) dictionary. The J-LIWC2015 dictionary is developed by [Igarashi, Okuda, and Sasahara (2022)](https://doi.org/10.3389/fpsyg.2022.841534) based on the original English version of LIWC2015, a de-facto standard text analysis dictionary for psycholinguistics [(Pennebaker, Boyd, Jordan, & Blackburn, 2015)](https://repositories.lib.utexas.edu/server/api/core/bitstreams/b0d26dcf-2391-4701-88d0-3cf50ebee697/content). Further information is available at [J-LIWC2015 official repository](https://github.com/tasukuigarashi/j-liwc2015).
+
+The **jliwc** package provides a simple R interface to use the Japanese
+version of LIWC2015 (J-LIWC2015) dictionary. The J-LIWC2015 dictionary
+is developed by [Igarashi, Okuda, and Sasahara
+(2022)](https://doi.org/10.3389/fpsyg.2022.841534) based on the original
+English version of LIWC2015, a de-facto standard text analysis
+dictionary for psycholinguistics [(Pennebaker, Boyd, Jordan, &
+Blackburn,
+2015)](https://repositories.lib.utexas.edu/server/api/core/bitstreams/b0d26dcf-2391-4701-88d0-3cf50ebee697/content).
+Further information is available at [J-LIWC2015 official
+repository](https://github.com/tasukuigarashi/j-liwc2015).
 
 <!-- write a paragraph: run on Windows, Mac, and Linux. R > 4.2.0 for UTF-8 use-->
-The package runs on Windows, Mac, and Linux. R version 4.2.0 or higher is required to use UTF-8 encoding.
+
+The package runs on Windows, Mac, and Linux. R version 4.2.0 or higher
+is required to use UTF-8 encoding.
 
 <!-- write a paragraph:
 to explain LIWC licence by Receptivi (LIWC2015 or LIWC22) is needed to use the J-LIWC2015 dictionary file, Non-commercial use only, How to get the licence -->
-Using the J-LIWC2015 dictionary file requires users to have a valid academic and university licence for LIWC2015 (end of sales) or LIWC-22. The dictionary is available for non-commercial use only. Please visit the [LIWC website](https://www.liwc.app/buy) for more information.
+
+Using the J-LIWC2015 dictionary file requires users to have a valid
+academic and university licence for LIWC2015 (end of sales) or LIWC-22.
+The dictionary is available for non-commercial use only. Please visit
+the [LIWC website](https://www.liwc.app/buy) for more information.
 
 ## Installation
 
 <!-- write a sentence to explain installation from github -->
-You can install the released version of **jliwc** from [GitHub](https://github.com/tasukuigarashi/jliwc). Windows users may need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first.
+
+You can install the released version of **jliwc** from
+[GitHub](https://github.com/tasukuigarashi/jliwc). Windows users may
+need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+first.
 
 ``` r
 # install.packages("remotes")
@@ -39,7 +46,9 @@ remotes::install_github("tasukuigarashi/jliwc")
 ```
 
 <!-- Explain users need to download J-LIWC dictionary file from LIWC website -->
-You also need to have the J-LIWC2015 dictionary file. You can download it from the LIWC website with a valid serial number.
+
+You also need to have the J-LIWC2015 dictionary file. You can download
+it from the LIWC website with a valid serial number.
 
 - [LIWC2015](https://www.liwc.net/dictionaries)
 - [LIWC-22](https://www.liwc.app/dictionaries)
@@ -47,9 +56,17 @@ You also need to have the J-LIWC2015 dictionary file. You can download it from t
 ## Set up dictionaries
 
 <!-- Write a paragraph about how to Setup the dictionaries: ipadic, userdic, and jliwcdic -->
-To analyze Japanese text data in **jliwc**, you need to set up three dictionaries: (1) IPAdic, (2) user dictionary, and (3) J-LIWC2015 dictionary.
 
-What you need to do first is to install the dictionaries by using the `install_dictionaries()` function. When installing the J-LIWC2015 dictionary on R GUI or RStudio, you will be asked to choose the dictionary file by a file chooser dialog. If you use an R console, you can select the dictionary file by typing the file path. This is only needed to be done once.
+To analyze Japanese text data in **jliwc**, you need to set up three
+dictionaries: (1) IPAdic, (2) user dictionary, and (3) J-LIWC2015
+dictionary.
+
+What you need to do first is to install the dictionaries by using the
+`install_dictionaries()` function. When installing the J-LIWC2015
+dictionary on R GUI or RStudio, you will be asked to choose the
+dictionary file by a file chooser dialog. If you use an R console, you
+can select the dictionary file by typing the file path. This is only
+needed to be done once.
 
 ``` r
 library(jliwc)
@@ -58,7 +75,11 @@ library(jliwc)
 install_dictionaries()
 ```
 
-If necessary, you can also install the dictionaries separately. The IPAdic and user dictionary files are automatically downloaded and installed by using the `install_ipadic()` and `install_userdic()` functions, respectively. Then you can set up the J-LIWC2015 dictionary file by using the `install_jliwcdic()` function. 
+If necessary, you can also install the dictionaries separately. The
+IPAdic and user dictionary files are automatically downloaded and
+installed by using the `install_ipadic()` and `install_userdic()`
+functions, respectively. Then you can set up the J-LIWC2015 dictionary
+file by using the `install_jliwcdic()` function.
 
 ``` r
 # You can skip the following if you installed all dictionaries by install_dictionaries()
@@ -75,7 +96,16 @@ install_userdic()
 install_jliwcdic()
 ```
 
-By default, all dictionaries are installed under a hidden local application directory (set by `tools::R_user_dir("jliwc", "data")`). In most cases, this is reasonable to secure the access to the files across different operating systems. However, you may fail to install the dictionaries on Windows if your username includes non-ASCII characters or spaces (e.g., `C:/Users/山田 太郎`). If you want to install the dictionaries at a different directory, you can specify the directory path by the `options(jliwc_project_home)`. It is strongly recommended that the dictionary path is named with ASCII (one-byte alphabetical or numeric) characters with no spaces (e.g., `C:/JLIWC`).
+By default, all dictionaries are installed under a hidden local
+application directory (set by `tools::R_user_dir("jliwc", "data")`). In
+most cases, this is reasonable to secure the access to the files across
+different operating systems. However, you may fail to install the
+dictionaries on Windows if your username includes non-ASCII characters
+or spaces (e.g., `C:/Users/山田 太郎`). If you want to install the
+dictionaries at a different directory, you can specify the directory
+path by the `options(jliwc_project_home)`. It is strongly recommended
+that the dictionary path is named with ASCII (one-byte alphabetical or
+numeric) characters with no spaces (e.g., `C:/JLIWC`).
 
 ``` r
 # You can skip the following if you installed all dictionaries at the default directory
@@ -94,9 +124,10 @@ install_dictionaries()
 
 The dictionary file installation needs to be done only once.
 
-Next time you can just use the `load_dictionaries()` function to load the dictionaries.
+Next time you can just use the `load_dictionaries()` function to load
+the dictionaries.
 
-```r
+``` r
 # Load LIWC dictionary
 load_dictionaries()
 ```
@@ -105,11 +136,18 @@ load_dictionaries()
 
 ### Analyze a column in a data frame
 
-After installing and loading the dictionary files, you can use the `liwc_analysis()` function to analyze Japanese texts. The function preprocesses the texts (including word segmentation by IPAdic) and returns a data frame with the LIWC category scores for each text. Don't forget to call the `load_dictionaries()` function before using the `liwc_analysis()` function.
+After installing and loading the dictionary files, you can use the
+`liwc_analysis()` function to analyze Japanese texts. The function
+preprocesses the texts (including word segmentation by IPAdic) and
+returns a data frame with the LIWC category scores for each text. Don’t
+forget to call the `load_dictionaries()` function before using the
+`liwc_analysis()` function.
 
-If you installed the dictionaries at a different directory from the default, set `options(jliwc_project_home = "path/to/directory")` to specify the directory path before loading the dictionary.
+If you installed the dictionaries at a different directory from the
+default, set `options(jliwc_project_home = "path/to/directory")` to
+specify the directory path before loading the dictionary.
 
-```r
+``` r
 # Load LIWC dictionary
 # If you installed the dictionaries at a different directory,
 # specify the directory path before loading the dictionary
@@ -166,9 +204,12 @@ dplyr::tibble(liwc_results)
 
 ### Read and analyze text files
 
-To read text files, you can use the `read_text_files()` function. The function takes a character vector of file paths or a directory path and returns a data frame that contains the text contents. You can directly pass the output of `read_text_files()` to `liwc_analysis()`.
+To read text files, you can use the `read_text_files()` function. The
+function takes a character vector of file paths or a directory path and
+returns a data frame that contains the text contents. You can directly
+pass the output of `read_text_files()` to `liwc_analysis()`.
 
-```r
+``` r
 # Load LIWC dictionary
 load_dictionaries()
 
@@ -245,17 +286,27 @@ dplyr::tibble(liwc_results_files)
 
 ## Notes
 
-Any request for the distribution of the J-LIWC2015 dictionary file is not acceptable. Queries about the commercial use of J-LIWC2015 should be directed to [Receptiviti](https://www.receptiviti.com/contact).
+Any request for the distribution of the J-LIWC2015 dictionary file is
+not acceptable. Queries about the commercial use of J-LIWC2015 should be
+directed to [Receptiviti](https://www.receptiviti.com/contact).
 
-The package relies on the [gibasa](https://github.com/paithiov909/gibasa) package for the compilation of IPAdic and word segmentation by MeCab and the [quanteda](https://github.com/quanteda/quanteda) package for dictionary-based psycholinguistic analysis.
+The package relies on the
+[gibasa](https://github.com/paithiov909/gibasa) package for the
+compilation of IPAdic and word segmentation by MeCab and the
+[quanteda](https://github.com/quanteda/quanteda) package for
+dictionary-based psycholinguistic analysis.
 
 ## Reference
 
-Igarashi, T., Okuda, S., & Sasahara, K. (2022). Development of the Japanese Version of the Linguistic Inquiry and Word Count Dictionary 2015. *Frontiers in Psychology*, 13:841534. https://doi.org/10.3389/fpsyg.2022.841534
+Igarashi, T., Okuda, S., & Sasahara, K. (2022). Development of the
+Japanese Version of the Linguistic Inquiry and Word Count Dictionary
+2015. *Frontiers in Psychology*, 13:841534.
+<https://doi.org/10.3389/fpsyg.2022.841534>
 
-Pennebaker, J.W., Boyd, R.L., Jordan, K., & Blackburn, K. (2015). *The development and
-psychometric properties of LIWC2015*. Austin, TX: University of Texas at Austin.
+Pennebaker, J.W., Boyd, R.L., Jordan, K., & Blackburn, K. (2015). *The
+development and psychometric properties of LIWC2015*. Austin, TX:
+University of Texas at Austin.
 
 ## License
 
-GPL (>=3) &copy; Tasuku Igarashi
+GPL (\>=3) © Tasuku Igarashi
