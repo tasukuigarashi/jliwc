@@ -1,6 +1,6 @@
 Package: jliwc
 Title: A Japanese Text Analyzer for J-LIWC Dictionary
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: 
     person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9432-4425"))
@@ -36,3 +36,5 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+SystemRequirements:
+    External dictionary file (J-LIWC2015) required for full functionality.

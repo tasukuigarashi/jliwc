@@ -4,13 +4,14 @@
 #' @param text_field A column name of text data (if input is a data frame)
 #' @param dict A dictionary2 class object of J-LIWC2015 dictionary
 #' @param lang A character vector specifying language of the output tag (English or Japanese)
-#' @param pos_tag logical; if TRUE, add POS percentage in MeCab
+#' @param pos_tag logical; if TRUE, add POS percentage in MeCab. Variables are named
+#' as "noun2", "verbs2", etc.
 #' @param sys_dic A path to a MeCab system dictionary
 #' @param user_dic A path to a MeCab user dictionary
 #'
 #' @importFrom rlang := .data
 #' @importFrom dplyr mutate select pull group_by summarise
-#' @importFrom dplyr ungroup bind_rows count relocate n
+#' @importFrom dplyr ungroup bind_rows count relocate n all_of
 #' @importFrom tidyr pivot_wider
 #' @importFrom stringr str_remove_all str_split
 #' @importFrom stringi stri_remove_empty
@@ -46,6 +47,9 @@ liwc_analysis <- function(input, text_field = "text",
                           dict = getOption("jliwc_dictfile"), lang = c("en", "ja"),
                           pos_tag = TRUE,
                           sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC")) {
+  # Initialize variables
+  Dic <- POS1 <- token <- nomatch <- total <- NULL
+
   # Default category labels are in English
   lang <- match.arg(lang)
 
@@ -97,19 +101,24 @@ liwc_analysis <- function(input, text_field = "text",
     dplyr::mutate(!!text_field := preprocess(.data[[text_field]])) |>
     tokenize_mecab(text_field = text_field, sys_dic = sys_dic, user_dic = user_dic, liwclike = TRUE) |>
       # dplyr::select(doc_id, sentence_id, token_id, token, POS1)
-      dplyr::select(.data[["doc_id"]], .data[["token"]], .data[["POS1"]])
+      # dplyr::select(.data[["doc_id"]], .data[["token"]], .data[["POS1"]])
+      dplyr::select(doc_id, token, POS1)
 
   # Calculate word count
   WC <- text_df |>
-    dplyr::group_by(.data[[docid_field]]) |>
-    dplyr::summarise(WC = n()) |>
+    dplyr::group_by(!!rlang::sym(docid_field)) |>
+    dplyr::summarise(WC = dplyr::n()) |>
     dplyr::pull(WC)
 
   dict_count <- text_df |>
-    dplyr::group_by(.data[[docid_field]]) |>
-    dplyr::select(.data[[docid_field]], .data[["token"]]) |>
-    dplyr::summarise(token = list(.data[["token"]])) |>
-    dplyr::select(.data[["token"]]) |>
+    # dplyr::group_by(.data[[docid_field]]) |>
+    dplyr::group_by(!!rlang::sym(docid_field)) |>
+    # dplyr::select(.data[[docid_field]], .data[["token"]]) |>
+    dplyr::select(!!rlang::sym(docid_field), token) |>
+    # dplyr::summarise(token = list(.data[["token"]])) |>
+    dplyr::summarise(token = list(token)) |>
+    # dplyr::select(.data[["token"]]) |>
+    dplyr::select(token) |>
     dplyr::pull() |>
     quanteda::as.tokens() |>
     quanteda::dfm() |>
@@ -120,15 +129,17 @@ liwc_analysis <- function(input, text_field = "text",
   dfr <- data.frame(WC = WC) |>
     dplyr::bind_cols(dict_proportion |> quanteda::convert(to = "data.frame")) |>
     dplyr::mutate(
-      Dic = 100 - .data[["nomatch"]]
+      # Dic = 100 - .data[["nomatch"]]
+      Dic = 100 - nomatch
     ) |>
     # % of dictionary words
-    dplyr::select(-.data[["nomatch"]])
+    dplyr::select(-nomatch)
 
   # doc_id in the original data
   dfr[[docid_field]] <- input[[docid_field]]
   dfr <- dfr |>
-    dplyr::relocate(.data[[docid_field]], WC, .data[["Dic"]])
+    # dplyr::relocate(.data[[docid_field]], WC, .data[["Dic"]])
+    dplyr::relocate(!!rlang::sym(docid_field), WC, Dic)
 
   # Translate category names into Japanese
   if (lang == "ja") {
@@ -141,16 +152,21 @@ liwc_analysis <- function(input, text_field = "text",
     MECAB_LOOKUP <- jliwc_env$MECAB_LOOKUP
 
     text_pos <- text_df |>
-      dplyr::group_by(.data[[docid_field]]) |>
-      dplyr::count(.data[["POS1"]]) |>
+      # dplyr::group_by(.data[[docid_field]]) |>
+      dplyr::group_by(!!rlang::sym(docid_field)) |>
+      # dplyr::count(.data[["POS1"]]) |>
+      dplyr::count(POS1) |>
       dplyr::mutate(total = sum(n)) |>
-      dplyr::mutate(text_pos = (n / .data[["total"]]) * 100) |>
-      dplyr::select(-n, -.data[["total"]]) |>
+      # dplyr::mutate(text_pos = (n / .data[["total"]]) * 100) |>
+      dplyr::mutate(text_pos = (n / total) * 100) |>
+      # dplyr::select(-n, -.data[["total"]]) |>
+      dplyr::select(-n, -total) |>
       dplyr::ungroup()
 
     wide_text_pos <- text_pos |>
      tidyr::pivot_wider(
-       names_from = .data[["POS1"]],
+       # names_from = .data[["POS1"]],
+       names_from = POS1,
        values_from = text_pos,
        values_fill = list(text_pos = 0)
      )

@@ -8,7 +8,7 @@
 #' @param sys_dic A character vector. The location of the system dictionary of MeCab.
 #' @param user_dic A character vector. The location of the user dictionary of MeCab.
 #' @param original A logical value. If \code{TRUE}, the function will use the original form of words.
-#' For example, '思い' is transformed into the original form of '思う'. This is useful for
+#' For example, '\u601D\u3044' is transformed into the original form of '\u601D\u3046'. This is useful for
 #' counting words.
 #' @param liwclike A logical value. If \code{TRUE},
 #' the function will exclude delimiters (\code{'\b'}) according to LIWC2015.
@@ -44,6 +44,7 @@ tokenize_mecab <- function(text, text_field = "text",
   # Use original form of words
   if (original) {
     text_df <- text_df |>
+      # dplyr::mutate(token = ifelse(!is.na(.data[["Original"]]), .data[["Original"]], .data[["token"]]))
       dplyr::mutate(token = ifelse(!is.na(.data[["Original"]]), .data[["Original"]], .data[["token"]]))
   }
 

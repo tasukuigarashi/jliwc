@@ -23,7 +23,8 @@ liwc_analysis(
 
 \item{lang}{A character vector specifying language of the output tag (English or Japanese)}
 
-\item{pos_tag}{logical; if TRUE, add POS percentage in MeCab}
+\item{pos_tag}{logical; if TRUE, add POS percentage in MeCab. Variables are named
+as "noun2", "verbs2", etc.}
 
 \item{sys_dic}{A path to a MeCab system dictionary}
 
