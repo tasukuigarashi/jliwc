@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' x <- preprocess("OK、今日の２時に！\r\n")
+#' x <- preprocess("\u004F\u004B\u3001\u4ECA\u65E5\u306E\uFF12\u6642\u306B\uFF01\r\n")
 #' x
 #' }
 #'
