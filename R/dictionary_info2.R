@@ -6,6 +6,8 @@
 #' @importFrom withr with_envvar
 #' @importFrom gibasa dictionary_info
 #'
+#' @noRd
+#'
 dictionary_info2 <- function(...) {
   withr::with_envvar(
     c(

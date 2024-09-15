@@ -24,10 +24,10 @@ The package runs on Windows, Mac, and Linux. R version 4.2.0 or higher
 is required to use UTF-8 encoding.
 
 <!-- write a paragraph:
-to explain LIWC licence by Receptivi (LIWC2015 or LIWC22) is needed to use the J-LIWC2015 dictionary file, Non-commercial use only, How to get the licence -->
+to explain LIWC license by Receptivi (LIWC2015 or LIWC22) is needed to use the J-LIWC2015 dictionary file, Non-commercial use only, How to get the license -->
 
 Using the J-LIWC2015 dictionary file requires users to have a valid
-academic and university licence for LIWC2015 (end of sales) or LIWC-22.
+academic and university license for LIWC2015 (end of sales) or LIWC-22.
 The dictionary is available for non-commercial use only. Please visit
 the [LIWC website](https://www.liwc.app/buy) for more information.
 
@@ -50,7 +50,7 @@ remotes::install_github("tasukuigarashi/jliwc")
 You also need to have the J-LIWC2015 dictionary file. You can download
 it from the LIWC website with a valid serial number.
 
-- [LIWC2015](https://www.liwc.net/dictionaries)
+- [LIWC2015](https://www.liwc.net/dictionaries/)
 - [LIWC-22](https://www.liwc.app/dictionaries)
 
 ## Set up dictionaries
@@ -288,7 +288,7 @@ dplyr::tibble(liwc_results_files)
 
 Any request for the distribution of the J-LIWC2015 dictionary file is
 not acceptable. Queries about the commercial use of J-LIWC2015 should be
-directed to [Receptiviti](https://www.receptiviti.com/contact).
+directed to [Receptiviti](https://www.receptiviti.com/).
 
 The package relies on the
 [gibasa](https://github.com/paithiov909/gibasa) package for the

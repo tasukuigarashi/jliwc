@@ -52,7 +52,7 @@ load_jliwcdic <- function(dir = getOption("jliwc_project_home"), silent = FALSE)
           dictliwc <- read_dict(dic[isdic][1], format = names(dic_format)[isdic][1])
         }
 
-        if (!silent) message("The LIWC dictionary file '", dic_file, "' was successfully loaded from ", dir, "\n")
+        if (!silent) message("\u2714  The LIWC dictionary file '", dic_file, "' is successfully loaded from ", dir, "\n")
         options(jliwc_dictfile = dictliwc)
         # Set the option for the dictionary file
         return(TRUE)

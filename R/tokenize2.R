@@ -9,6 +9,8 @@
 #'
 #' @return tokenized character vector
 #'
+#' @noRd
+#'
 tokenize2 <- function(x, ...) {
   withr::with_envvar(
     c(

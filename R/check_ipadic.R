@@ -20,7 +20,7 @@ check_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictname 
       # check if IPADIC is properly installed
       dictionary_info2(sys_dic = IPADIC)
       # Success
-      if (!silent) message("IPADIC is installed at ", IPADIC)
+      if (!silent) message("\u2714  IPADIC is installed at ", IPADIC, "\n")
       # Set IPADIC as the path to the dictionary
       options(jliwc_IPADIC = IPADIC)
       return(TRUE)

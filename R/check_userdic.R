@@ -21,7 +21,7 @@ check_userdic <- function(dir = getOption("jliwc_project_home"), user_dic = "use
       # check if the user dictionary file is properly installed
       dictionary_info2(sys_dic = getOption("jliwc_IPADIC"), user_dic = USERDIC)
       # Success
-      if (!silent) message("User dictionary is installed at ", USERDIC)
+      if (!silent) message("\u2714  User dictionary is installed at ", USERDIC, "\n")
       options(jliwc_USERDIC = USERDIC)
       return(TRUE)
     },

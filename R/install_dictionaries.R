@@ -19,7 +19,18 @@
 install_dictionaries <- function(ipadic = TRUE,
                                    userdic = TRUE,
                                    jliwcdic = TRUE) {
-  if (ipadic) install_ipadic()
-  if (userdic) install_userdic()
-  if (jliwcdic) install_jliwcdic()
+  if (ipadic) {
+    message("Installing IPAdic...\n")
+    install_ipadic()
+  }
+
+  if (userdic) {
+    message("Installing the user dictionary...\n")
+    install_userdic()
+  }
+
+  if (jliwcdic) {
+    message("Installing the J-LIWC2015 dictionary...\n")
+    install_jliwcdic()
+  }
 }

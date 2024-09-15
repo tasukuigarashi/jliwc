@@ -47,57 +47,72 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
           )
         } else {
           dic_file <- basename(dic[isdic])
-          cat("The LIWC dictionary file '", dic_file, "' was found at ", dir, "\n\n", sep = "")
+          cat("The LIWC dictionary file '", dic_file, "' is found at ", dir, "\n\n", sep = "")
           # dictliwc <- read_dict(dic[isdic], format = names(dic_format)[isdic])
         }
 
-          cat("You have three options:\n\n")
-          # choose 1 or 2
-          cat("1. Install the dictionary file at ", dir, " (for later use) and load it (default)\n", sep = "")
-          cat("2. Only load the dictionary file (do not copy it)\n", sep = "")
-          cat("3. Quit\n\n")
-          cat("Please type 1, 2, or 3 (ESC or CTRL+C to quit): ")
-          copy <- readline()
+        # cat("You have three options:\n\n")
+        # # choose 1 or 2
+        # cat("1. (default) Install the dictionary file at ", dir, " (for later use) and load it\n", sep = "")
+        # cat("2. Only load the dictionary file (do not copy it)\n", sep = "")
+        # cat("3. Quit\n\n")
 
-          while (!copy %in% 1:3) {
-            cat("Please type 1, 2, or 3 (ESC or CTRL+C to quit): ")
-            copy <- readline()
-          }
+        # copy <- readline("Please type 1, 2, or 3 (ESC or CTRL+C to quit): ")
 
-          if (copy == 3) {
-            message("The installation was canceled.\n")
-            return(FALSE)
-          }
+        # while (!copy %in% 1:3) {
+        #   copy <- readline("Please type 1, 2, or 3 (ESC or CTRL+C to quit): ")
+        # }
 
-          # choose the dictionary file
-          cat("Please choose the dictionary file (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n\n")
+        # if (copy == 3) {
+        #   message("The installation is canceled.\n")
+        #   return(FALSE)
+        # }
+
+        copy <- readline("Do you install the J-LIWC2015 dictionary? [Y/N] ")
+
+        while (!copy %in% c("Y", "N", "y", "n")) {
+          copy <- readline("Do you install the J-LIWC2015 dictionary? [Y/N] ")
+        }
+
+        if (copy %in% c("N", "n")) {
+          message("The installation is cencelled.\n")
+          return(TRUE)
+        }
+
+        # choose the dictionary file
+
+        cat("Please choose the dictionary file (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n\n")
+        if (capabilities("tcltk")) {
+          dic <- tcltk::tk_choose.files()
+        } else {
           dic <- file.choose()
+        }
 
-          # Stop if dic does not match dic_file
-          if (!basename(dic) %in% dic_format) {
-            stop("The dictionary file must be named '", paste(dic_format, collapse = "', '"), "'.", call. = FALSE)
-          }
+        # Stop if dic does not match dic_file
+        if (!basename(dic) %in% dic_format) {
+          stop("The dictionary file must be named '", paste(dic_format, collapse = "', '"), "'.", call. = FALSE)
+        }
 
-          # Read the dictionary file
-          format <- names(dic_format)[dic_format == basename(dic)]
-          dictliwc <- read_dict(dic, format = format)
+        # Read the dictionary file
+        format <- names(dic_format)[dic_format == basename(dic)]
+        dictliwc <- read_dict(dic, format = format)
 
-          # Copy the dictionary file to the home directory
-          if (copy == 1) {
-            if (!dir.exists(dir)) {
-              dir.create(dir, recursive = TRUE)
-            }
+        # Copy the dictionary file to the home directory
+        if (!dir.exists(dir)) {
+          dir.create(dir, recursive = TRUE)
 
-            file.copy(from = dic, to = dir)
-            message("The dictionary file was copied to ", dir, "\n")
-            dic <- file.path(dir, basename(dic)) # Not necessary
-            dic_file <- basename(dic)
-          }
+          file.copy(from = dic, to = dir)
+          message("The dictionary file is copied to ", dir, "\n")
+          dic <- file.path(dir, basename(dic)) # Not necessary
+          dic_file <- basename(dic)
+        }
 
         # save the dictionary path to the configuration file
         save_jliwc_config(dic, "jliwcdic")
 
-        if (!silent) message("The LIWC dictionary file '", dic_file, "' was successfully loaded from ", dir, "\n")
+        # if (!silent) message("The LIWC dictionary file '", dic_file, "' is successfully loaded from ", dir, "\n")
+        if (!silent) cat("\u2714  The LIWC dictionary file '", dic_file, "' is successfully installed.\n")
+
         options(jliwc_dictfile = dictliwc)
         # Set the option for the dictionary file
         return(TRUE)

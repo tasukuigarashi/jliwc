@@ -9,6 +9,8 @@
 #' @importFrom jsonlite write_json fromJSON
 #' @return NULL
 #'
+#' @noRd
+#'
 # Save a setting file
 save_jliwc_config <- function(file_path, config_key) {
   config_dir <- tools::R_user_dir("jliwc", "config")

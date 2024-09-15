@@ -8,6 +8,8 @@
 #' @return A character vector. Japanese characters that can be interpreted as
 #'  a word boundary `\b` in regular expressions are omitted from the original text.
 #'
+#' @noRd
+#'
 preprocess_liwc <- function(text) {
   text |>
     stringr::str_remove_all("\\*|:|\\|") |>

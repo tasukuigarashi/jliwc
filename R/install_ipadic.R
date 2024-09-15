@@ -74,7 +74,7 @@ install_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictnam
           # remove temporary directory
           unlink(tar_dic, recursive = TRUE)
         } else {
-          message("IPADic is not installed.")
+          message("The installation is cancelled.\n")
           return(TRUE)
         }
 
@@ -87,7 +87,7 @@ install_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictnam
         save_jliwc_config(files, "ipadic")
 
         # Success
-        if (!silent) message("IPADIC is installed at ", IPADIC, "\n")
+        if (!silent) message("\u2714  IPADIC is installed at ", IPADIC, "\n")
         # Set IPADIC as the path to the dictionary
         options(jliwc_IPADIC = IPADIC)
         return(TRUE)
