@@ -9,6 +9,7 @@ tokenize_mecab(
   text_field = "text",
   sys_dic = getOption("jliwc_IPADIC"),
   user_dic = getOption("jliwc_USERDIC"),
+  baseform = FALSE,
   original = FALSE,
   liwclike = TRUE
 )
@@ -23,9 +24,9 @@ the function will use the column specified by \code{text_field}.}
 
 \item{user_dic}{A character vector. The location of the user dictionary of MeCab.}
 
-\item{original}{A logical value. If \code{TRUE}, the function will use the original form of words.
-For example, '\u601D\u3044' is transformed into the original form of '\u601D\u3046'. This is useful for
-counting words.}
+\item{baseform}{A logical value. If \code{TRUE}, the function will use the base form of words.}
+
+\item{original}{A logical value. If \code{TRUE}, Same as \code{baseform}.}
 
 \item{liwclike}{A logical value. If \code{TRUE},
 the function will exclude delimiters (\code{'\b'}) according to LIWC2015.}
