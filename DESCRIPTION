@@ -1,12 +1,12 @@
 Package: jliwc
 Title: A Japanese Text Analyzer for J-LIWC Dictionary
-Version: 0.5.3
+Version: 0.5.5
 Authors@R: 
     person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9432-4425"))
 Description: A Japanese text analyzer using J-LIWC, the Japanese version
-    of LIWC (Linguistic Inquiry and Word Count).  The J-LIWC2015
-    dictionary is developed by Igarashi, Okuda, and Sasahara (2022)
+    of LIWC (Linguistic Inquiry and Word Count). The J-LIWC2015 dictionary
+    is developed by Igarashi, Okuda, and Sasahara (2022)
     <doi:10.3389/fpsyg.2022.841534>. The dictionary file is available at
     <https://www.liwc.app/dictionaries> (LIWC-22) and
     <https://www.liwc.net/dictionaries/> (LIWC2015) for academic and
@@ -30,7 +30,8 @@ Imports:
     utils,
     withr
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    mockery
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

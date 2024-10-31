@@ -33,7 +33,8 @@ load_dictionaries <- function(silent = FALSE) {
     error = function(e) {
       message(e)
       cat("\nIPAdic is not properly loaded.\n")
-    })
+    }
+  )
 
   tryCatch(
     {
@@ -47,7 +48,8 @@ load_dictionaries <- function(silent = FALSE) {
     error = function(e) {
       message(e)
       cat("\nUser dictionary is not properly loaded.\n")
-    })
+    }
+  )
 
   tryCatch(
     {
@@ -61,7 +63,8 @@ load_dictionaries <- function(silent = FALSE) {
     error = function(e) {
       message(e)
       cat("\nJ-LIWC dictionary is not properly loaded.\n")
-    })
+    }
+  )
 
   if (ipadic & userdic & jliwcdic) {
     if (!silent) cat("All dictionaries are properly loaded.\n")

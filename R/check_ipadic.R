@@ -23,17 +23,17 @@ check_ipadic <- function(dir = getOption("jliwc_project_home"), ipadic_dictname 
       if (!silent) message("\u2714  IPADIC is installed at ", IPADIC, "\n")
       # Set IPADIC as the path to the dictionary
       options(jliwc_IPADIC = IPADIC)
-      return(TRUE)
+      return(invisible(TRUE))
     },
     warning = function(w) {
       if (!silent) message(w)
       if (!silent) message("\nIPADIC is not properly installed. Check the directory at ", IPADIC)
-      return(FALSE)
+      return(invisible(FALSE))
     },
     error = function(e) {
       if (!silent) message(e)
       if (!silent) message("\nIPADIC is not properly installed. Check the directory at ", IPADIC)
-      return(FALSE)
+      return(invisible(FALSE))
     }
   )
 

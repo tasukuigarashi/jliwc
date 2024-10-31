@@ -59,6 +59,9 @@ read_text_files <- function(inputs, filetype = "txt") {
 
   all_data <- do.call(rbind, lapply(inputs, process_input))
 
+  # remove empty rows in the "text" column
+  all_data <- all_data[all_data$text != "", ]
+
   # Display the number of files read and total bytes
   message("Number of files read: ", total_files)
   message("Total bytes: ", total_bytes)

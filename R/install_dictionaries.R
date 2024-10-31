@@ -17,8 +17,8 @@
 #' @export
 #'
 install_dictionaries <- function(ipadic = TRUE,
-                                   userdic = TRUE,
-                                   jliwcdic = TRUE) {
+                                 userdic = TRUE,
+                                 jliwcdic = TRUE) {
   if (ipadic) {
     message("Installing IPAdic...\n")
     install_ipadic()

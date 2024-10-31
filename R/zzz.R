@@ -10,6 +10,8 @@
 # Assign a package environment
 "_PACKAGE"
 
+readline <- NULL
+
 jliwc_env <- new.env()
 
 # Read environmental variables defined in "jliwc_env.R"
@@ -37,7 +39,8 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
 
   # project home directory
   jliwc_project_home <- normalizePath(file.path(HOME, SUB),
-    winslash = "/", mustWork = FALSE)
+    winslash = "/", mustWork = FALSE
+  )
 
   # J-LIWC dictionary2 object
   jliwc_dictfile <- NULL
@@ -50,13 +53,15 @@ jliwc_env$MECAB_LOOKUP <- mecab_lookup
   jliwc_IPADIC_dir <- IPADIC
 
   jliwc_IPADIC <- normalizePath(file.path(jliwc_project_home, IPADIC),
-    winslash = "/", mustWork = FALSE)
+    winslash = "/", mustWork = FALSE
+  )
 
   # USERDIC (file)
   jliwc_USERDIC <- normalizePath(file.path(jliwc_project_home, USERDIC),
-    winslash = "/", mustWork = FALSE)
+    winslash = "/", mustWork = FALSE
+  )
 
-  # IPADIC url: Alternative: "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz"
+  # IPADIC url: Alternative: "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz/download"
   jliwc_IPADIC_url <- "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
   jliwc_USERDIC_url <- "https://github.com/tasukuigarashi/j-liwc2015/raw/main/user_dict.dic"
 
