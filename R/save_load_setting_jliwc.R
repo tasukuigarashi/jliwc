@@ -42,13 +42,24 @@ save_jliwc_config <- function(file_path, config_key) {
   jsonlite::write_json(config, config_file)
 }
 
-# Read a setting file
-load_jliwc_config <- function() {
-  config_file <- file.path(tools::R_user_dir("jliwc", "config"), "config.json")
+# Read a setting file with enhanced error handling and optional custom path
+load_jliwc_config <- function(config_path = tools::R_user_dir("jliwc", "config")) {
+  config_file <- file.path(config_path, "config.json")
+
+  # Check if the configuration file exists
   if (file.exists(config_file)) {
     config <- jsonlite::fromJSON(config_file)
+
+    # Validate the content structure (add required keys as needed)
+    required_keys <- c("jliwcdic", "ipadic", "userdic")  # Replace or modify as necessary
+    missing_keys <- setdiff(required_keys, names(config))
+
+    if (length(missing_keys) > 0) {
+      stop(paste("Configuration file is missing required keys:", paste(missing_keys, collapse = ", ")))
+    }
+
     return(config)
   } else {
-    stop("No configuration file found.")
+    stop(paste("No configuration file found at:", config_file))
   }
 }
