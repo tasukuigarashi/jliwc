@@ -1,5 +1,5 @@
 #' Uninstall dictionary files
-#' #'
+#'
 #' @description Uninstall dictionary files installed by the jliwc package
 #'
 #' @param ipadic A logical value to remove IPADic files
@@ -20,7 +20,7 @@
 #'
 #' @export
 #'
-uninstall_dictionaries <- function(ipadic = TRUE, userdic = TRUE, jliwcdic = FALSE) {
+uninstall_dictionaries <- function(ipadic = TRUE, userdic = TRUE, jliwcdic = TRUE) {
   check <- tryCatch(
     {
       config <- load_jliwc_config()

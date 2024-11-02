@@ -242,6 +242,9 @@ dplyr::tibble(liwc_results_files)
 #> #   anger <dbl>, sad <dbl>, social <dbl>, family <dbl>, …
 #> # ℹ Use `print(n = ...)` to see more rows
 ```
+## Uninstall dictionaries
+
+If you want to uninstall the dictionaries, use `uninstall_dictionaries()`. This function removes the dictionaries from the system.
 
 ## Notes
 

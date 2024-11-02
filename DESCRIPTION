@@ -1,6 +1,6 @@
 Package: jliwc
 Title: A Japanese Text Analyzer for J-LIWC Dictionary
-Version: 0.5.5
+Version: 0.5.6
 Authors@R: 
     person("Tasuku", "Igarashi", , "igarashi.tasuku@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9432-4425"))
