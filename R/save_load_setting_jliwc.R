@@ -4,6 +4,7 @@
 #'
 #' @param file_path A character string of the file path
 #' @param config_key A character string of the key to save the file path
+#' @param config_dir A character string of the directory path to save the configuration file
 #'
 #' @importFrom tools R_user_dir
 #' @importFrom jsonlite write_json fromJSON
@@ -12,9 +13,8 @@
 #' @noRd
 #'
 # Save a setting file
-save_jliwc_config <- function(file_path, config_key) {
+save_jliwc_config <- function(file_path, config_key, config_dir = tools::R_user_dir("jliwc", "config")) {
   file_path <- normalizePath(file_path, winslash = "/", mustWork = FALSE)
-  config_dir <- tools::R_user_dir("jliwc", "config")
 
   if (!dir.exists(config_dir)) {
     dir.create(config_dir, recursive = TRUE, showWarnings = FALSE)
@@ -43,8 +43,8 @@ save_jliwc_config <- function(file_path, config_key) {
 }
 
 # Read a setting file with enhanced error handling and optional custom path
-load_jliwc_config <- function(config_path = tools::R_user_dir("jliwc", "config")) {
-  config_file <- file.path(config_path, "config.json")
+load_jliwc_config <- function(config_dir = tools::R_user_dir("jliwc", "config")) {
+  config_file <- file.path(config_dir, "config.json")
 
   # Check if the configuration file exists
   if (file.exists(config_file)) {

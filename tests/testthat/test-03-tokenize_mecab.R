@@ -5,7 +5,12 @@ test_that("test tokenize_mecab", {
   # }
 
   # Load the necessary dictionaries
-  # load_dictionaries()
+  temp_dir <- tempdir()
+  config_dir <- file.path(temp_dir, "jliwc", "config")
+  data_dir <- file.path(temp_dir, "jliwc", "data")
+  options(jliwc_project_home = data_dir)
+
+  load_dictionaries()
 
   # Test 1: Typical case - Analyze a sample text
   text_sample <- gibasa::ginga

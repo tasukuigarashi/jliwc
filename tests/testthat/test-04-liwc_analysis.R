@@ -1,7 +1,17 @@
+# Test dictionary installation functions
+temp_dir <- tempdir()
+config_dir <- file.path(temp_dir, "jliwc", "config")
+data_dir <- file.path(temp_dir, "jliwc", "data")
+
 test_that("liwc_analysis with a mock dictionary", {
+  options(jliwc_project_home = data_dir)
+  mock_R_user_dir <- mockery::mock(temp_dir)
+  mockery::stub(save_jliwc_config, "tools::R_user_dir", mock_R_user_dir)
+
   load_dictionaries()
 
   sample <- gibasa::ginga[1:10]
+  message("sample: ", sample)
 
   # Test 1: Analyze character vector
   test1 <- function() {

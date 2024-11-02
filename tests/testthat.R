@@ -8,6 +8,7 @@
 
 library(testthat)
 library(mockery)
+library(jsonlite)
 library(jliwc)
 
 temp_dir <- tempdir()

@@ -5,7 +5,7 @@ other_function <- function(...) {
     env <- get("jliwc_env", .GlobalEnv)
   }
 
-  # 環境内の関数を使用
+  # Use the environment to get the value of the variable
   result <- env$MECAB_LOOKUP
   return(result)
 }
