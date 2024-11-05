@@ -63,7 +63,7 @@ uninstall_dictionaries <- function(ipadic = TRUE, userdic = TRUE, jliwcdic = TRU
         }
       }
 
-      uninstall <- readline("Do you uninstall these dictionary files? [Y/N] ")
+      uninstall <- readline("\nDo you uninstall these dictionary files? [Y/N] ")
 
       while (!uninstall %in% c("Y", "N", "y", "n")) {
         uninstall <- readline("Do you uninstall these dictionary files? [Y/N] ")
@@ -77,6 +77,7 @@ uninstall_dictionaries <- function(ipadic = TRUE, userdic = TRUE, jliwcdic = TRU
         ipadic_files <- config$ipadic
         if (length(ipadic_files) > 0) {
           unlink(ipadic_files)
+          ipadic_files <- paste(ipadic_files, collapse = "\n")
           message("IPADic files are removed from: ", ipadic_files)
         }
         config$ipadic <- NULL
@@ -104,7 +105,12 @@ uninstall_dictionaries <- function(ipadic = TRUE, userdic = TRUE, jliwcdic = TRU
       config_dir <- tools::R_user_dir("jliwc", "config")
       config_file <- file.path(config_dir, "config.json")
 
-      jsonlite::write_json(config, config_file)
+      # if config is empty, delete the file
+      if (length(names(config)) == 0) {
+        unlink(config_file, recursive = TRUE)
+      } else {
+        jsonlite::write_json(config, config_file)
+      }
 
       return(invisible(TRUE))
     },

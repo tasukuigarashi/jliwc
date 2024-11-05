@@ -55,7 +55,7 @@ load_jliwc_config <- function(config_dir = tools::R_user_dir("jliwc", "config"))
     missing_keys <- setdiff(required_keys, names(config))
 
     if (length(missing_keys) > 0) {
-      stop(paste("Configuration file is missing required keys:", paste(missing_keys, collapse = ", ")))
+      message(paste("Configuration file is missing required keys:", paste(missing_keys, collapse = ", "), "\n"))
     }
 
     return(config)

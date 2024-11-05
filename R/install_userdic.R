@@ -76,7 +76,12 @@ install_userdic <- function(dir = getOption("jliwc_project_home"),
       },
       error = function(e) {
         message(e)
-        message("\nUser dictionary is not properly installed. Try installing it again.")
+        if (e == "Failed to create MeCab::Model: maybe provided an invalid dictionary?\n") {
+          # ipadic is not installed
+          message("\nPlease install the ipadic first.")
+        } else {
+          message("\nUser dictionary is not properly installed. Try installing it again.")
+        }
         return(invisible(FALSE))
       }
     )
