@@ -7,6 +7,10 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
+library(mockery)
+library(jsonlite)
 library(jliwc)
+
+temp_dir <- tempdir()
 
 test_check("jliwc")

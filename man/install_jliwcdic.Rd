@@ -6,12 +6,15 @@
 \usage{
 install_jliwcdic(
   dir = getOption("jliwc_project_home"),
+  dic = NULL,
   format = getOption("jliwc_format", default = "LIWC2015"),
   silent = FALSE
 )
 }
 \arguments{
-\item{dir}{a path to the J-LIWC2015 dictionary}
+\item{dir}{a path to a directory to install a J-LIWC2015 dictionary}
+
+\item{dic}{a path to a dictionary file. If \code{NULL}, you can choose a file via a file chooser.}
 
 \item{format}{A format of the dictionary (LIWC2015 or LIWC22).
 Use this option if the dictionary type is not automatically detected.}

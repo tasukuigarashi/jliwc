@@ -1,5 +1,6 @@
 #' Install J-LIWC dictionary file
-#' @param dir a path to the J-LIWC2015 dictionary
+#' @param dir a path to a directory to install a J-LIWC2015 dictionary
+#' @param dic a path to a dictionary file. If \code{NULL}, you can choose a file via a file chooser.
 #' @param format A format of the dictionary (LIWC2015 or LIWC22).
 #' Use this option if the dictionary type is not automatically detected.
 #' @param silent Boolean. Whether to print messages
@@ -18,6 +19,7 @@
 #' @export
 #'
 install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
+                             dic = NULL,
                              format = getOption("jliwc_format", default = "LIWC2015"),
                              silent = FALSE) {
   # set the temporary directory to avoid errors to install IPADIC
@@ -32,21 +34,21 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         # Dictionary file name
         dic_format <- getOption("jliwc_dic_filename")
 
-        dic <- file.path(dir, dic_format) |> path.expand()
+        dic_path <- file.path(dir, dic_format) |> path.expand()
 
-        isdir <- file.info(dic)$isdir
-        isdic <- file.exists(dic)
+        isdir <- file.info(dic_path)$isdir
+        isdic <- file.exists(dic_path)
 
         if (any(isdir, na.rm = TRUE) | !any(isdic)) {
           # dir <- ifelse(isdir, dic, dirname(dic))
 
           # Copy the dictionary file to the home directory
           cat("The LIWC dictionary file '", paste0(dic_format, collapse = "', '"),
-            "' was not found at ", dir, "\n\n",
+            "' is not found at ", dir, "\n\n",
             sep = ""
           )
         } else {
-          dic_file <- basename(dic[isdic])
+          dic_file <- basename(dic_path[isdic])
           cat("The LIWC dictionary file '", dic_file, "' is found at ", dir, "\n\n", sep = "")
           # dictliwc <- read_dict(dic[isdic], format = names(dic_format)[isdic])
         }
@@ -75,21 +77,23 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         }
 
         if (copy %in% c("N", "n")) {
-          message("The installation is cencelled.\n")
-          return(TRUE)
+          message("The installation is cancelled.")
+          return(invisible(FALSE))
         }
 
-        # choose the dictionary file
-
-        cat("Please choose the dictionary file (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n\n")
-        if (capabilities("tcltk")) {
-          dic <- tcltk::tk_choose.files()
-        } else {
-          dic <- file.choose()
+        # choose the dictionary file if dic is NULL
+        if (is.null(dic)) {
+          cat("Please choose the dictionary file (another window opens). If you can't find the window, reduce the size of the current R/RStudio window.\n")
+          if (capabilities("tcltk")) {
+            dic <- tcltk::tk_choose.files()
+          } else {
+            dic <- file.choose()
+          }
         }
 
         # Stop if dic does not match dic_file
-        if (!basename(dic) %in% dic_format) {
+        dic_file <- basename(dic)
+        if (!dic_file %in% dic_format) {
           stop("The dictionary file must be named '", paste(dic_format, collapse = "', '"), "'.", call. = FALSE)
         }
 
@@ -100,12 +104,11 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
         # Copy the dictionary file to the home directory
         if (!dir.exists(dir)) {
           dir.create(dir, recursive = TRUE)
-
-          file.copy(from = dic, to = dir)
-          message("The dictionary file is copied to ", dir, "\n")
-          dic <- file.path(dir, basename(dic)) # Not necessary
-          dic_file <- basename(dic)
         }
+
+        file.copy(from = dic, to = dir)
+        message("The dictionary file is copied to ", dir, "\n")
+        dic <- file.path(dir, dic_file) # Not necessary
 
         # save the dictionary path to the configuration file
         save_jliwc_config(dic, "jliwcdic")
@@ -115,17 +118,17 @@ install_jliwcdic <- function(dir = getOption("jliwc_project_home"),
 
         options(jliwc_dictfile = dictliwc)
         # Set the option for the dictionary file
-        return(TRUE)
+        return(invisible(TRUE))
       },
       warning = function(w) {
         message(w)
-        message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
-        return(FALSE)
+        message("\nThe LIWC dictionary file is not properly installed/loaded.")
+        return(invisible(FALSE))
       },
       error = function(e) {
         message(e)
-        message("\nThe LIWC dictionary file is not properly installed/loaded.\n")
-        return(FALSE)
+        message("\nThe LIWC dictionary file is not properly installed/loaded.")
+        return(invisible(FALSE))
       }
     )
   })

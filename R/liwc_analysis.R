@@ -100,9 +100,9 @@ liwc_analysis <- function(input, text_field = "text",
   text_df <- input |>
     dplyr::mutate(!!text_field := preprocess(.data[[text_field]])) |>
     tokenize_mecab(text_field = text_field, sys_dic = sys_dic, user_dic = user_dic, liwclike = TRUE) |>
-      # dplyr::select(doc_id, sentence_id, token_id, token, POS1)
-      # dplyr::select(.data[["doc_id"]], .data[["token"]], .data[["POS1"]])
-      dplyr::select(doc_id, token, POS1)
+    # dplyr::select(doc_id, sentence_id, token_id, token, POS1)
+    # dplyr::select(.data[["doc_id"]], .data[["token"]], .data[["POS1"]])
+    dplyr::select(doc_id, token, POS1)
 
   # Calculate word count
   WC <- text_df |>
@@ -164,12 +164,12 @@ liwc_analysis <- function(input, text_field = "text",
       dplyr::ungroup()
 
     wide_text_pos <- text_pos |>
-     tidyr::pivot_wider(
-       # names_from = .data[["POS1"]],
-       names_from = POS1,
-       values_from = text_pos,
-       values_fill = list(text_pos = 0)
-     )
+      tidyr::pivot_wider(
+        # names_from = .data[["POS1"]],
+        names_from = POS1,
+        values_from = text_pos,
+        values_fill = list(text_pos = 0)
+      )
 
     # slower
     # wide_text_pos <- reshape(text_pos, idvar = "doc_id", timevar = "POS1", direction = "wide")

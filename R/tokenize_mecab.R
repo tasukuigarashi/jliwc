@@ -34,9 +34,9 @@
 #' @export
 #'
 tokenize_mecab <- function(text, text_field = "text",
-                        sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC"),
-                        baseform = FALSE, original = FALSE,
-                        liwclike = TRUE) {
+                           sys_dic = getOption("jliwc_IPADIC"), user_dic = getOption("jliwc_USERDIC"),
+                           baseform = FALSE, original = FALSE,
+                           liwclike = TRUE) {
   text_df <- tokenize2(text, text_field = text_field, sys_dic = sys_dic, user_dic = user_dic) |>
     gibasa::prettify()
 

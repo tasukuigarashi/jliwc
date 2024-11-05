@@ -53,8 +53,8 @@ install_userdic <- function(dir = getOption("jliwc_project_home"),
 
           cat("The user dictionary file is downloaded from GitHub.\n")
         } else {
-          message("The installation is cancelled.\n")
-          return(TRUE)
+          message("The installation is cancelled.")
+          return(invisible(FALSE))
         }
 
         if (file.info(USERDIC)$size == 0) {
@@ -66,18 +66,23 @@ install_userdic <- function(dir = getOption("jliwc_project_home"),
 
         # Set USERDIC as the path to the dictionary
         options(jliwc_USERDIC = USERDIC)
-        return(TRUE)
+        return(invisible(TRUE))
       },
       warning = function(w) {
         # This warning is probably because of the broken file
         message(w)
-        message("\nUser dictionary is not properly installed (the file might be broken). Try installing it again.\n")
-        return(FALSE)
+        message("\nUser dictionary is not properly installed (the file might be broken). Try installing it again.")
+        return(invisible(FALSE))
       },
       error = function(e) {
         message(e)
-        message("\nUser dictionary is not properly installed. Try installing it again.\n")
-        return(FALSE)
+        if (e == "Failed to create MeCab::Model: maybe provided an invalid dictionary?\n") {
+          # ipadic is not installed
+          message("\nPlease install the ipadic first.")
+        } else {
+          message("\nUser dictionary is not properly installed. Try installing it again.")
+        }
+        return(invisible(FALSE))
       }
     )
   })
